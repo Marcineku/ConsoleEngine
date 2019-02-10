@@ -7,8 +7,9 @@ class Game : public ConsoleEngine::Engine
 private:
 	double timer;
 	double interval;
-	int playerPositionX = 0;
-	int playerPositionY = 0;
+
+	double playerPositionX = 0.0;
+	double playerPositionY = 0.0;
 
 protected:
 	virtual void setup() override;

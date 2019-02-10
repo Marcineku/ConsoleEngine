@@ -68,13 +68,19 @@ void ConsoleEngine::Window::clear()
 	memset(buffer, 0, sizeof(CHAR_INFO) * width * height);
 }
 
-bool ConsoleEngine::Window::isKeyDown(KEY key)
+bool ConsoleEngine::Window::isKeyDown(int key)
 {
 	return GetAsyncKeyState(key) >> 15;
 }
 
-void ConsoleEngine::Window::point(int x, int y, PIXEL_COLOR color)
+void ConsoleEngine::Window::point(double x, double y, PIXEL_COLOR color)
 {
-	buffer[y * width + x].Char.UnicodeChar = 0;
-	buffer[y * width + x].Attributes = color;
+	int bufferPoint = y * width + x;
+
+	if (bufferPoint < 0 ||
+		bufferPoint >= width * height)
+		return;
+
+	buffer[bufferPoint].Char.UnicodeChar = 0;
+	buffer[bufferPoint].Attributes = color;
 }

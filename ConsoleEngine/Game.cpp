@@ -21,23 +21,17 @@ void Game::update(double deltaTime)
 {
 	timer += deltaTime;
 
+	if (isKeyDown(ConsoleEngine::KEY_LEFT))
+		playerPositionX -= deltaTime * 50;
+
+	if (isKeyDown(ConsoleEngine::KEY_UP))
+		playerPositionY -= deltaTime * 50;
+
+	if (isKeyDown(ConsoleEngine::KEY_DOWN))
+		playerPositionY += deltaTime * 50;
+
+	if (isKeyDown(ConsoleEngine::KEY_RIGHT))
+		playerPositionX += deltaTime * 50;
+
 	window->point(playerPositionX, playerPositionY);
-
-	if (timer >= interval)
-	{
-		GetAsyncKeyState(0);
-		playerPositionX += 1;
-		timer = 0.0;
-	}
-
-	if (playerPositionX >= window->getWidth())
-	{
-		playerPositionX = 0;
-		playerPositionY += 1;
-
-		if (playerPositionY >= window->getHeight())
-		{
-			this->playerPositionY = 0;
-		}
-	}
 }

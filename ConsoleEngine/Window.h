@@ -48,7 +48,11 @@ namespace ConsoleEngine
 
 	enum KEY
 	{
-		KEY_ESC = 0x1B
+		KEY_ESC = 0x1B,
+		KEY_LEFT = 0x25,
+		KEY_UP = 0x26,
+		KEY_RIGHT = 0x27,
+		KEY_DOWN = 0x28
 	};
 
 	class Window
@@ -78,8 +82,8 @@ namespace ConsoleEngine
 		void draw();
 		void clear();
 
-		bool isKeyDown(KEY key);
+		bool isKeyDown(int key);
 
-		void point(int x, int y, PIXEL_COLOR color = PIXEL_WHITE);
+		void point(double x, double y, PIXEL_COLOR color = PIXEL_WHITE);
 	};
 }
