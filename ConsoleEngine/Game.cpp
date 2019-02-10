@@ -21,17 +21,17 @@ void Game::update(double deltaTime)
 {
 	timer += deltaTime;
 
-	if (isKeyDown(ConsoleEngine::KEY_LEFT))
+	if (isKeyDown(ConsoleEngine::KEY::KEY_LEFT))
 		playerPositionX -= deltaTime * 50;
 
-	if (isKeyDown(ConsoleEngine::KEY_UP))
+	if (isKeyDown(ConsoleEngine::KEY::KEY_UP))
 		playerPositionY -= deltaTime * 50;
 
-	if (isKeyDown(ConsoleEngine::KEY_DOWN))
-		playerPositionY += deltaTime * 50;
-
-	if (isKeyDown(ConsoleEngine::KEY_RIGHT))
+	if (isKeyDown(ConsoleEngine::KEY::KEY_RIGHT))
 		playerPositionX += deltaTime * 50;
+
+	if (isKeyDown(ConsoleEngine::KEY::KEY_DOWN))
+		playerPositionY += deltaTime * 50;
 
 	window->point(playerPositionX, playerPositionY);
 }

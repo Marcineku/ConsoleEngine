@@ -75,11 +75,14 @@ bool ConsoleEngine::Window::isKeyDown(int key)
 
 void ConsoleEngine::Window::point(double x, double y, PIXEL_COLOR color)
 {
-	int bufferPoint = y * width + x;
+	int xInt = lround(x);
+	int yInt = lround(y);
 
-	if (bufferPoint < 0 ||
-		bufferPoint >= width * height)
+	if (xInt < 0 || xInt >= width ||
+		yInt < 0 || yInt >= height)
 		return;
+
+	int bufferPoint = yInt * width + xInt;
 
 	buffer[bufferPoint].Char.UnicodeChar = 0;
 	buffer[bufferPoint].Attributes = color;
