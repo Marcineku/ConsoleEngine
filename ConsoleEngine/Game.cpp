@@ -25,6 +25,7 @@ void Game::update(double deltaTime)
 
 	if (timer >= interval)
 	{
+		GetAsyncKeyState(0);
 		playerPositionX += 1;
 		timer = 0.0;
 	}

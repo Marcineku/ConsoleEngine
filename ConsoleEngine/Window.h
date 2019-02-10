@@ -46,6 +46,11 @@ namespace ConsoleEngine
 		PIXEL_WHITE = 0x00F0
 	};
 
+	enum KEY
+	{
+		KEY_ESC = 0x1B
+	};
+
 	class Window
 	{
 	private:
@@ -72,6 +77,8 @@ namespace ConsoleEngine
 
 		void draw();
 		void clear();
+
+		bool isKeyDown(KEY key);
 
 		void point(int x, int y, PIXEL_COLOR color = PIXEL_WHITE);
 	};

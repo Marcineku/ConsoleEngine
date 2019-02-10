@@ -68,6 +68,11 @@ void ConsoleEngine::Window::clear()
 	memset(buffer, 0, sizeof(CHAR_INFO) * width * height);
 }
 
+bool ConsoleEngine::Window::isKeyDown(KEY key)
+{
+	return GetAsyncKeyState(key) >> 15;
+}
+
 void ConsoleEngine::Window::point(int x, int y, PIXEL_COLOR color)
 {
 	buffer[y * width + x].Char.UnicodeChar = 0;
