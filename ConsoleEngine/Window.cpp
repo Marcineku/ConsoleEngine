@@ -9,6 +9,7 @@ ConsoleEngine::Window::Window(int windowWidth, int windowHeight, int fontWidth, 
 	width = static_cast<short>(windowWidth);
 	height = static_cast<short>(windowHeight);
 
+	start = { 0, 0 };
 	size = { 0, 0, width - 1, height - 1 };
 
 	bufferSize = { width, height };
@@ -36,9 +37,39 @@ ConsoleEngine::Window::Window(int windowWidth, int windowHeight, int fontWidth, 
 
 	// Setting proper console size
 	SetConsoleWindowInfo(console, true, &size);
+
+	// Hiding console cursor
+	CONSOLE_CURSOR_INFO cursor = { 1, false };
+	SetConsoleCursorInfo(console, &cursor);
+
+	// Disabling select, enabling window and mouse input events
+	SetConsoleMode(consoleInput, ENABLE_EXTENDED_FLAGS | ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT);
 }
 
 ConsoleEngine::Window::~Window()
 {
 	delete[] buffer;
+}
+
+void ConsoleEngine::Window::updateFPS(double deltaTime)
+{
+	wchar_t title[MAX_PATH];
+	swprintf_s(title, MAX_PATH, L"FPS: %f", 1.0 / deltaTime);
+	SetConsoleTitle(title);
+}
+
+void ConsoleEngine::Window::draw()
+{
+	WriteConsoleOutput(console, buffer, bufferSize, start, &size);
+}
+
+void ConsoleEngine::Window::clear()
+{
+	memset(buffer, 0, sizeof(CHAR_INFO) * width * height);
+}
+
+void ConsoleEngine::Window::point(int x, int y)
+{
+	buffer[y * width + x].Char.UnicodeChar = 0;
+	buffer[y * width + x].Attributes = BACKGROUND_INTENSITY;
 }

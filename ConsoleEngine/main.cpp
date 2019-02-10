@@ -1,14 +1,9 @@
-#include "Window.h"
-
-// TODO
-#include <conio.h>
+#include "Game.h"
 
 int main(int argc, char* argv[])
 {
-	ConsoleEngine::Window window(120, 80);
-
-	// TODO
-	_getch();
+	Game game(120, 80);
+	game.run();
 
 	return 0;
 }
