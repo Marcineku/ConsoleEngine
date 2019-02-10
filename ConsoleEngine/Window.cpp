@@ -68,8 +68,8 @@ void ConsoleEngine::Window::clear()
 	memset(buffer, 0, sizeof(CHAR_INFO) * width * height);
 }
 
-void ConsoleEngine::Window::point(int x, int y)
+void ConsoleEngine::Window::point(int x, int y, PIXEL_COLOR color)
 {
 	buffer[y * width + x].Char.UnicodeChar = 0;
-	buffer[y * width + x].Attributes = BACKGROUND_INTENSITY;
+	buffer[y * width + x].Attributes = color;
 }
