@@ -21,6 +21,8 @@ namespace ConsoleEngine
 		virtual void update(double deltaTime) = 0;
 
 		bool isKeyDown(KEY key);
+		bool isKeyPressed(KEY key);
+		bool isKeyReleased(KEY key);
 
 	public:
 		Engine(int consoleWidth, int consoleHeight, int fontWidth, int fontHeight);

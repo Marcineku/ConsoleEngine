@@ -34,16 +34,19 @@ void ConsoleEngine::Engine::start()
 		timePoint1 = timePoint2;
 		double deltaTime = duration.count();
 
+		window->clear();
+
 		for (int i = 0; i < 256; ++i)
 		{
 			isKeyDownNew[i] = window->isKeyDown(i);
+		}
+		update(deltaTime);
+		for (int i = 0; i < 256; ++i)
+		{
 			isKeyDownOld[i] = isKeyDownNew[i];
 		}
 
-		window->clear();
-		update(deltaTime);
 		window->draw();
-
 		window->updateFPS(deltaTime);
 	}
 }
@@ -51,4 +54,14 @@ void ConsoleEngine::Engine::start()
 bool ConsoleEngine::Engine::isKeyDown(KEY key)
 {
 	return isKeyDownNew[key];
+}
+
+bool ConsoleEngine::Engine::isKeyPressed(KEY key)
+{
+	return !isKeyDownOld[key] && isKeyDownNew[key];
+}
+
+bool ConsoleEngine::Engine::isKeyReleased(KEY key)
+{
+	return isKeyDownOld[key] && !isKeyDownNew[key];
 }

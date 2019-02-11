@@ -5,9 +5,6 @@
 class Game : public ConsoleEngine::Engine
 {
 private:
-	double timer;
-	double interval;
-
 	double playerPositionX = 0.0;
 	double playerPositionY = 0.0;
 
