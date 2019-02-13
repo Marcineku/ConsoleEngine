@@ -18,11 +18,17 @@ void Game::setup()
 
 void Game::update(double deltaTime)
 {
-	if (isKeyPressed(ConsoleEngine::KEY::KEY_LEFT))
-		playerPositionX -= 1;
+	if (isKeyPressed(ConsoleEngine::KEY::BUTTON_LEFT))
+	{
+		Block block(getMousePosition().x, getMousePosition().y);
+		gameObjects.push_back(block);
+	}
 
-	if (isKeyReleased(ConsoleEngine::KEY::KEY_UP))
-		playerPositionY -= 1;
+	if (isKeyDown(ConsoleEngine::KEY::KEY_LEFT))
+		playerPositionX -= deltaTime * 50;
+
+	if (isKeyDown(ConsoleEngine::KEY::KEY_UP))
+		playerPositionY -= deltaTime * 50;
 
 	if (isKeyDown(ConsoleEngine::KEY::KEY_RIGHT))
 		playerPositionX += deltaTime * 50;
@@ -30,5 +36,15 @@ void Game::update(double deltaTime)
 	if (isKeyDown(ConsoleEngine::KEY::KEY_DOWN))
 		playerPositionY += deltaTime * 50;
 
-	window->point(playerPositionX, playerPositionY);
+	for (auto gameObject: gameObjects)
+	{
+		window->drawPixel(gameObject.x, gameObject.y);
+	}
+
+	window->drawPixel(playerPositionX, playerPositionY);
+
+	window->drawPixel(getMousePosition().x, getMousePosition().y - 1);
+	window->drawPixel(getMousePosition().x, getMousePosition().y + 1);
+	window->drawPixel(getMousePosition().x - 1, getMousePosition().y);
+	window->drawPixel(getMousePosition().x + 1, getMousePosition().y);
 }

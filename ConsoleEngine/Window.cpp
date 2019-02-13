@@ -16,6 +16,12 @@ ConsoleEngine::Window::Window(int windowWidth, int windowHeight, int fontWidth, 
 	buffer = new CHAR_INFO[width * height];
 	memset(buffer, 0, sizeof(CHAR_INFO) * width * height);
 
+	numberOfInputEvents = 0;
+	inputEventsBufferSize = 128;
+	inputEventsBuffer = new INPUT_RECORD[inputEventsBufferSize];
+
+	mousePosition = { 0, 0 };
+
 	// Shrinking window to minimum in order to set proper console buffer size
 	SMALL_RECT minWindowSize = { 0, 0, 1, 1 };
 	SetConsoleWindowInfo(console, true, &minWindowSize);
@@ -49,6 +55,7 @@ ConsoleEngine::Window::Window(int windowWidth, int windowHeight, int fontWidth, 
 ConsoleEngine::Window::~Window()
 {
 	delete[] buffer;
+	delete[] inputEventsBuffer;
 }
 
 void ConsoleEngine::Window::updateFPS(double deltaTime)
@@ -73,7 +80,26 @@ bool ConsoleEngine::Window::isKeyDown(int key)
 	return GetAsyncKeyState(key) >> 15;
 }
 
-void ConsoleEngine::Window::point(double x, double y, PIXEL_COLOR color)
+ConsoleEngine::Point ConsoleEngine::Window::getMousePosition()
+{
+	GetNumberOfConsoleInputEvents(consoleInput, &numberOfInputEvents);
+	if (numberOfInputEvents > 0)
+	{
+		ReadConsoleInput(consoleInput, inputEventsBuffer, inputEventsBufferSize, &numberOfInputEvents);
+		for (int i = 0; i < numberOfInputEvents; ++i)
+		{
+			if (inputEventsBuffer[i].EventType == MOUSE_EVENT)
+			{
+				mousePosition.X = inputEventsBuffer[i].Event.MouseEvent.dwMousePosition.X;
+				mousePosition.Y = inputEventsBuffer[i].Event.MouseEvent.dwMousePosition.Y;
+			}
+		}
+	}
+
+	return Point(mousePosition.X, mousePosition.Y);
+}
+
+void ConsoleEngine::Window::drawPixel(double x, double y, PIXEL_COLOR color)
 {
 	int xInt = lround(x);
 	int yInt = lround(y);

@@ -48,6 +48,10 @@ namespace ConsoleEngine
 
 	enum KEY
 	{
+		BUTTON_LEFT = 0x01,
+		BUTTON_RIGHT = 0x02,
+		BUTTON_MIDDLE = 0x04,
+
 		KEY_BACKSPACE = 0x08,
 		KEY_TAB = 0x09,
 		KEY_ENTER = 0x0D,
@@ -106,6 +110,21 @@ namespace ConsoleEngine
 		KEY_Z = 0x5A
 	};
 
+	struct Point
+	{
+		int x, y;
+		Point()
+		{
+			x = 0;
+			y = 0;
+		}
+		Point(int x, int y)
+		{
+			this->x = x;
+			this->y = y;
+		}
+	};
+
 	class Window
 	{
 	private:
@@ -121,6 +140,12 @@ namespace ConsoleEngine
 		COORD bufferSize;
 		CHAR_INFO* buffer;
 
+		DWORD numberOfInputEvents;
+		short inputEventsBufferSize;
+		INPUT_RECORD* inputEventsBuffer;
+
+		COORD mousePosition;
+
 	public:
 		Window(int windowWidth, int windowHeight, int fontWidth, int fontHeight);
 		~Window();
@@ -135,6 +160,8 @@ namespace ConsoleEngine
 
 		bool isKeyDown(int key);
 
-		void point(double x, double y, PIXEL_COLOR color = PIXEL_WHITE);
+		Point getMousePosition();
+
+		void drawPixel(double x, double y, PIXEL_COLOR color = PIXEL_WHITE);
 	};
 }

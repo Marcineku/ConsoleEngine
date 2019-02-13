@@ -14,6 +14,8 @@ namespace ConsoleEngine
 		bool* isKeyDownNew;
 		bool* isKeyDownOld;
 
+		Point mousePosition;
+
 	protected:
 		Window* window;
 
@@ -24,10 +26,13 @@ namespace ConsoleEngine
 		bool isKeyPressed(KEY key);
 		bool isKeyReleased(KEY key);
 
+		Point getMousePosition() { return Point(mousePosition.x, mousePosition.y); }
+
 	public:
 		Engine(int consoleWidth, int consoleHeight, int fontWidth, int fontHeight);
 		~Engine();
 
 		void start();
+		inline void stop() { run = false; }
 	};
 }

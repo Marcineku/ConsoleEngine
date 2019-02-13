@@ -10,6 +10,8 @@ ConsoleEngine::Engine::Engine(int consoleWidth, int consoleHeight, int fontWidth
 	isKeyDownOld = new bool[256];
 	std::memset(isKeyDownNew, 0, 256 * sizeof(bool));
 	std::memset(isKeyDownOld, 0, 256 * sizeof(bool));
+
+	mousePosition = { 0, 0 };
 }
 
 ConsoleEngine::Engine::~Engine()
@@ -37,14 +39,14 @@ void ConsoleEngine::Engine::start()
 		window->clear();
 
 		for (int i = 0; i < 256; ++i)
-		{
 			isKeyDownNew[i] = window->isKeyDown(i);
-		}
+
+		mousePosition = window->getMousePosition();
+
 		update(deltaTime);
+
 		for (int i = 0; i < 256; ++i)
-		{
 			isKeyDownOld[i] = isKeyDownNew[i];
-		}
 
 		window->draw();
 		window->updateFPS(deltaTime);
