@@ -52,6 +52,17 @@ namespace ConsoleEngine
 		PIXEL_WHITE = 0x00F0
 	};
 
+	enum PIXEL_TYPE
+	{
+		TYPE_NONE = 0x0,
+		TYPE_UPPER_HALF_BLOCK = 0x2580,
+		TYPE_LOWER_ONE_EIGHTH_BLOCK = 0x2581,
+		TYPE_FULL_BLOCK = 0x2588,
+		TYPE_LIGHT_SHADE = 0x2591,
+		TYPE_MEDIUM_SHADE = 0x2592,
+		TYPE_DARK_SHADE = 0x2593
+	};
+
 	enum KEY
 	{
 		BUTTON_LEFT = 0x01,
@@ -154,8 +165,8 @@ namespace ConsoleEngine
 
 		inline int toBufferPoint(int x, int y);
 
-		inline void drawLineLow(int x0, int y0, int x1, int y1, PIXEL_COLOR color);
-		inline void drawLineHigh(int x0, int y0, int x1, int y1, PIXEL_COLOR color);
+		inline void drawLineLow(int x0, int y0, int x1, int y1, PIXEL_COLOR color, PIXEL_TYPE type, TEXT_COLOR fill);
+		inline void drawLineHigh(int x0, int y0, int x1, int y1, PIXEL_COLOR color, PIXEL_TYPE type, TEXT_COLOR fill);
 	public:
 		Window(int windowWidth, int windowHeight, int fontWidth, int fontHeight);
 		~Window();
@@ -172,9 +183,9 @@ namespace ConsoleEngine
 
 		Point getMousePosition();
 
-		CONSOLEENGINE_API void drawPixel(int x, int y, PIXEL_COLOR color = PIXEL_WHITE);
-		CONSOLEENGINE_API void drawPixel(double x, double y, PIXEL_COLOR color = PIXEL_WHITE);
-		CONSOLEENGINE_API void drawLine(int x0, int y0, int x1, int y1, PIXEL_COLOR color = PIXEL_WHITE);
-		CONSOLEENGINE_API void drawLine(double x0, double y0, double x1, double y1, PIXEL_COLOR color = PIXEL_WHITE);
+		CONSOLEENGINE_API void drawPixel(int x, int y, PIXEL_COLOR color = PIXEL_WHITE, PIXEL_TYPE type = TYPE_NONE, TEXT_COLOR fill = TEXT_WHITE);
+		CONSOLEENGINE_API void drawPixel(double x, double y, PIXEL_COLOR color = PIXEL_WHITE, PIXEL_TYPE type = TYPE_NONE, TEXT_COLOR fill = TEXT_WHITE);
+		CONSOLEENGINE_API void drawLine(int x0, int y0, int x1, int y1, PIXEL_COLOR color = PIXEL_WHITE, PIXEL_TYPE type = TYPE_NONE, TEXT_COLOR fill = TEXT_WHITE);
+		CONSOLEENGINE_API void drawLine(double x0, double y0, double x1, double y1, PIXEL_COLOR color = PIXEL_WHITE, PIXEL_TYPE type = TYPE_NONE, TEXT_COLOR fill = TEXT_WHITE);
 	};
 }

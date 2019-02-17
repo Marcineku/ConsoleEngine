@@ -5,7 +5,7 @@ inline int ConsoleEngine::Window::toBufferPoint(int x, int y)
 	return y * width + x;
 }
 
-inline void ConsoleEngine::Window::drawLineLow(int x0, int y0, int x1, int y1, PIXEL_COLOR color)
+inline void ConsoleEngine::Window::drawLineLow(int x0, int y0, int x1, int y1, PIXEL_COLOR color, PIXEL_TYPE type, TEXT_COLOR fill)
 {
 	int dx = x1 - x0;
 	int dy = y1 - y0;
@@ -20,7 +20,7 @@ inline void ConsoleEngine::Window::drawLineLow(int x0, int y0, int x1, int y1, P
 	int y = y0;
 	for (int x = x0; x < x1; ++x)
 	{
-		drawPixel(x, y, color);
+		drawPixel(x, y, color, type, fill);
 		if (D > 0)
 		{
 			y += yi;
@@ -30,7 +30,7 @@ inline void ConsoleEngine::Window::drawLineLow(int x0, int y0, int x1, int y1, P
 	}
 }
 
-inline void ConsoleEngine::Window::drawLineHigh(int x0, int y0, int x1, int y1, PIXEL_COLOR color)
+inline void ConsoleEngine::Window::drawLineHigh(int x0, int y0, int x1, int y1, PIXEL_COLOR color, PIXEL_TYPE type, TEXT_COLOR fill)
 {
 	int dx = x1 - x0;
 	int dy = y1 - y0;
@@ -45,7 +45,7 @@ inline void ConsoleEngine::Window::drawLineHigh(int x0, int y0, int x1, int y1, 
 	int x = x0;
 	for (int y = y0; y < y1; ++y)
 	{
-		drawPixel(x, y, color);
+		drawPixel(x, y, color, type, fill);
 		if (D > 0)
 		{
 			x += xi;
@@ -154,47 +154,48 @@ ConsoleEngine::Point ConsoleEngine::Window::getMousePosition()
 	return Point(mousePosition.X, mousePosition.Y);
 }
 
-void ConsoleEngine::Window::drawPixel(int x, int y, PIXEL_COLOR color)
+void ConsoleEngine::Window::drawPixel(int x, int y, PIXEL_COLOR color, PIXEL_TYPE type, TEXT_COLOR fill)
 {
 	if (x < 0 || x >= width ||
 		y < 0 || y >= height)
 		return;
 
-	buffer[toBufferPoint(x, y)].Attributes = color;
+	buffer[toBufferPoint(x, y)].Char.UnicodeChar = type;
+	buffer[toBufferPoint(x, y)].Attributes = color | fill;
 }
 
-void ConsoleEngine::Window::drawPixel(double x, double y, PIXEL_COLOR color)
+void ConsoleEngine::Window::drawPixel(double x, double y, PIXEL_COLOR color, PIXEL_TYPE type, TEXT_COLOR fill)
 {
 	int xInt = lround(x);
 	int yInt = lround(y);
 
-	drawPixel(xInt, yInt, color);
+	drawPixel(xInt, yInt, color, type, fill);
 }
 
-void ConsoleEngine::Window::drawLine(int x0, int y0, int x1, int y1, PIXEL_COLOR color)
+void ConsoleEngine::Window::drawLine(int x0, int y0, int x1, int y1, PIXEL_COLOR color, PIXEL_TYPE type, TEXT_COLOR fill)
 {
 	if (abs(y1 - y0) < abs(x1 - x0))
 	{
 		if (x0 > x1)
-			drawLineLow(x1, y1, x0, y0, color);
+			drawLineLow(x1, y1, x0, y0, color, type, fill);
 		else
-			drawLineLow(x0, y0, x1, y1, color);
+			drawLineLow(x0, y0, x1, y1, color, type, fill);
 	}
 	else
 	{
 		if (y0 > y1)
-			drawLineHigh(x1, y1, x0, y0, color);
+			drawLineHigh(x1, y1, x0, y0, color, type, fill);
 		else
-			drawLineHigh(x0, y0, x1, y1, color);
+			drawLineHigh(x0, y0, x1, y1, color, type, fill);
 	}
 }
 
-void ConsoleEngine::Window::drawLine(double x0, double y0, double x1, double y1, PIXEL_COLOR color)
+void ConsoleEngine::Window::drawLine(double x0, double y0, double x1, double y1, PIXEL_COLOR color, PIXEL_TYPE type, TEXT_COLOR fill)
 {
 	int x0Int = lround(x0);
 	int y0Int = lround(y0);
 	int x1Int = lround(x1);
 	int y1Int = lround(y1);
 
-	drawLine(x0Int, y0Int, x1Int, y1Int, color);
+	drawLine(x0Int, y0Int, x1Int, y1Int, color, type, fill);
 }
