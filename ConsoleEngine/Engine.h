@@ -33,6 +33,6 @@ namespace ConsoleEngine
 		~Engine();
 
 		void start();
-		inline void stop() { run = false; }
+		void stop() { run = false; }
 	};
 }

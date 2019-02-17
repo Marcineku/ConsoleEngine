@@ -1,5 +1,60 @@
 #include "Window.h"
 
+inline int ConsoleEngine::Window::toBufferPoint(int x, int y)
+{
+	return y * width + x;
+}
+
+inline void ConsoleEngine::Window::drawLineLow(int x0, int y0, int x1, int y1, PIXEL_COLOR color)
+{
+	int dx = x1 - x0;
+	int dy = y1 - y0;
+	int yi = 1;
+	if (dy < 0)
+	{
+		yi = -1;
+		dy = -dy;
+	}
+	int D = 2 * dy - dx;
+	
+	int y = y0;
+	for (int x = x0; x < x1; ++x)
+	{
+		drawPixel(x, y, color);
+		if (D > 0)
+		{
+			y += yi;
+			D -= 2 * dx;
+		}
+		D += 2 * dy;
+	}
+}
+
+inline void ConsoleEngine::Window::drawLineHigh(int x0, int y0, int x1, int y1, PIXEL_COLOR color)
+{
+	int dx = x1 - x0;
+	int dy = y1 - y0;
+	int xi = 1;
+	if (dx < 0)
+	{
+		xi = -1;
+		dx = -dx;
+	}
+	int D = 2 * dx - dy;
+	
+	int x = x0;
+	for (int y = y0; y < y1; ++y)
+	{
+		drawPixel(x, y, color);
+		if (D > 0)
+		{
+			x += xi;
+			D -= 2 * dy;
+		}
+		D += 2 * dx;
+	}
+}
+
 ConsoleEngine::Window::Window(int windowWidth, int windowHeight, int fontWidth, int fontHeight)
 {
 	// Initializing private fields
@@ -99,17 +154,47 @@ ConsoleEngine::Point ConsoleEngine::Window::getMousePosition()
 	return Point(mousePosition.X, mousePosition.Y);
 }
 
+void ConsoleEngine::Window::drawPixel(int x, int y, PIXEL_COLOR color)
+{
+	if (x < 0 || x >= width ||
+		y < 0 || y >= height)
+		return;
+
+	buffer[toBufferPoint(x, y)].Attributes = color;
+}
+
 void ConsoleEngine::Window::drawPixel(double x, double y, PIXEL_COLOR color)
 {
 	int xInt = lround(x);
 	int yInt = lround(y);
 
-	if (xInt < 0 || xInt >= width ||
-		yInt < 0 || yInt >= height)
-		return;
+	drawPixel(xInt, yInt, color);
+}
 
-	int bufferPoint = yInt * width + xInt;
+void ConsoleEngine::Window::drawLine(int x0, int y0, int x1, int y1, PIXEL_COLOR color)
+{
+	if (abs(y1 - y0) < abs(x1 - x0))
+	{
+		if (x0 > x1)
+			drawLineLow(x1, y1, x0, y0, color);
+		else
+			drawLineLow(x0, y0, x1, y1, color);
+	}
+	else
+	{
+		if (y0 > y1)
+			drawLineHigh(x1, y1, x0, y0, color);
+		else
+			drawLineHigh(x0, y0, x1, y1, color);
+	}
+}
 
-	buffer[bufferPoint].Char.UnicodeChar = 0;
-	buffer[bufferPoint].Attributes = color;
+void ConsoleEngine::Window::drawLine(double x0, double y0, double x1, double y1, PIXEL_COLOR color)
+{
+	int x0Int = lround(x0);
+	int y0Int = lround(y0);
+	int x1Int = lround(x1);
+	int y1Int = lround(y1);
+
+	drawLine(x0Int, y0Int, x1Int, y1Int, color);
 }

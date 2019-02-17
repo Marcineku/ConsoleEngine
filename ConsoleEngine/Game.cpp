@@ -47,4 +47,6 @@ void Game::update(double deltaTime)
 	window->drawPixel(getMousePosition().x, getMousePosition().y + 1);
 	window->drawPixel(getMousePosition().x - 1, getMousePosition().y);
 	window->drawPixel(getMousePosition().x + 1, getMousePosition().y);
+
+	window->drawLine(1, 1, window->getWidth() - 1, window->getHeight() - 1);
 }

@@ -146,6 +146,10 @@ namespace ConsoleEngine
 
 		COORD mousePosition;
 
+		inline int toBufferPoint(int x, int y);
+
+		inline void drawLineLow(int x0, int y0, int x1, int y1, PIXEL_COLOR color);
+		inline void drawLineHigh(int x0, int y0, int x1, int y1, PIXEL_COLOR color);
 	public:
 		Window(int windowWidth, int windowHeight, int fontWidth, int fontHeight);
 		~Window();
@@ -162,6 +166,9 @@ namespace ConsoleEngine
 
 		Point getMousePosition();
 
+		void drawPixel(int x, int y, PIXEL_COLOR color = PIXEL_WHITE);
 		void drawPixel(double x, double y, PIXEL_COLOR color = PIXEL_WHITE);
+		void drawLine(int x0, int y0, int x1, int y1, PIXEL_COLOR color = PIXEL_WHITE);
+		void drawLine(double x0, double y0, double x1, double y1, PIXEL_COLOR color = PIXEL_WHITE);
 	};
 }
