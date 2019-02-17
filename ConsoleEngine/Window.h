@@ -157,10 +157,10 @@ namespace ConsoleEngine
 		inline int getWidth() { return width; }
 		inline int getHeight() { return height; }
 
-		void updateFPS(double deltaTime);
+		void updateTitle(double deltaTime);
 
-		void draw();
-		void clear();
+		void updateScreen();
+		void clearBuffer();
 
 		bool isKeyDown(int key);
 

@@ -113,19 +113,19 @@ ConsoleEngine::Window::~Window()
 	delete[] inputEventsBuffer;
 }
 
-void ConsoleEngine::Window::updateFPS(double deltaTime)
+void ConsoleEngine::Window::updateTitle(double deltaTime)
 {
 	wchar_t title[MAX_PATH];
 	swprintf_s(title, MAX_PATH, L"FPS: %f", 1.0 / deltaTime);
 	SetConsoleTitle(title);
 }
 
-void ConsoleEngine::Window::draw()
+void ConsoleEngine::Window::updateScreen()
 {
 	WriteConsoleOutput(console, buffer, bufferSize, start, &size);
 }
 
-void ConsoleEngine::Window::clear()
+void ConsoleEngine::Window::clearBuffer()
 {
 	memset(buffer, 0, sizeof(CHAR_INFO) * width * height);
 }

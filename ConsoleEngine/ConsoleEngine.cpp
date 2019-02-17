@@ -1,4 +1,4 @@
-#include "Engine.h"
+#include "ConsoleEngine.h"
 
 ConsoleEngine::Engine::Engine(int consoleWidth, int consoleHeight, int fontWidth, int fontHeight)
 {
@@ -36,7 +36,7 @@ void ConsoleEngine::Engine::start()
 		timePoint1 = timePoint2;
 		double deltaTime = duration.count();
 
-		window->clear();
+		window->clearBuffer();
 
 		for (int i = 0; i < 256; ++i)
 			isKeyDownNew[i] = window->isKeyDown(i);
@@ -48,8 +48,8 @@ void ConsoleEngine::Engine::start()
 		for (int i = 0; i < 256; ++i)
 			isKeyDownOld[i] = isKeyDownNew[i];
 
-		window->draw();
-		window->updateFPS(deltaTime);
+		window->updateScreen();
+		window->updateTitle(deltaTime);
 	}
 }
 
