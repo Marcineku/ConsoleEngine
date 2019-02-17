@@ -22,17 +22,17 @@ namespace ConsoleEngine
 		virtual void setup() = 0;
 		virtual void update(double deltaTime) = 0;
 
-		bool isKeyDown(KEY key);
-		bool isKeyPressed(KEY key);
-		bool isKeyReleased(KEY key);
+		CONSOLEENGINE_API bool isKeyDown(KEY key);
+		CONSOLEENGINE_API bool isKeyPressed(KEY key);
+		CONSOLEENGINE_API bool isKeyReleased(KEY key);
 
-		Point getMousePosition() { return Point(mousePosition.x, mousePosition.y); }
+		CONSOLEENGINE_API Point getMousePosition() { return Point(mousePosition.x, mousePosition.y); }
 
 	public:
-		Engine(int consoleWidth, int consoleHeight, int fontWidth, int fontHeight);
-		~Engine();
+		CONSOLEENGINE_API Engine(int consoleWidth, int consoleHeight, int fontWidth, int fontHeight);
+		CONSOLEENGINE_API ~Engine();
 
-		void start();
-		void stop() { run = false; }
+		CONSOLEENGINE_API void start();
+		CONSOLEENGINE_API void stop() { run = false; }
 	};
 }

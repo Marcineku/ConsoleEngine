@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef CONSOLEENGINE_EXPORTS
+#define CONSOLEENGINE_API __declspec(dllexport)
+#else
+#define CONSOLEENGINE_API __declspec(dllimport)
+#endif
+
 #include <Windows.h>
 
 #include <string>
@@ -166,9 +172,9 @@ namespace ConsoleEngine
 
 		Point getMousePosition();
 
-		void drawPixel(int x, int y, PIXEL_COLOR color = PIXEL_WHITE);
-		void drawPixel(double x, double y, PIXEL_COLOR color = PIXEL_WHITE);
-		void drawLine(int x0, int y0, int x1, int y1, PIXEL_COLOR color = PIXEL_WHITE);
-		void drawLine(double x0, double y0, double x1, double y1, PIXEL_COLOR color = PIXEL_WHITE);
+		CONSOLEENGINE_API void drawPixel(int x, int y, PIXEL_COLOR color = PIXEL_WHITE);
+		CONSOLEENGINE_API void drawPixel(double x, double y, PIXEL_COLOR color = PIXEL_WHITE);
+		CONSOLEENGINE_API void drawLine(int x0, int y0, int x1, int y1, PIXEL_COLOR color = PIXEL_WHITE);
+		CONSOLEENGINE_API void drawLine(double x0, double y0, double x1, double y1, PIXEL_COLOR color = PIXEL_WHITE);
 	};
 }

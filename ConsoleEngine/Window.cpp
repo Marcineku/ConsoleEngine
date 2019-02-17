@@ -141,7 +141,7 @@ ConsoleEngine::Point ConsoleEngine::Window::getMousePosition()
 	if (numberOfInputEvents > 0)
 	{
 		ReadConsoleInput(consoleInput, inputEventsBuffer, inputEventsBufferSize, &numberOfInputEvents);
-		for (int i = 0; i < numberOfInputEvents; ++i)
+		for (DWORD i = 0; i < numberOfInputEvents; ++i)
 		{
 			if (inputEventsBuffer[i].EventType == MOUSE_EVENT)
 			{
