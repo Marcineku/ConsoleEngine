@@ -4,34 +4,16 @@
 
 #include <vector>
 
-struct Block
-{
-	double x, y;
-	Block()
-	{
-		x = 0.0;
-		y = 0.0;
-	}
-	Block(double x, double y)
-	{
-		this->x = x;
-		this->y = y;
-	}
-};
-
-class Game : public ConsoleEngine::Engine
+class Game : public ce::ConsoleEngine
 {
 private:
-	std::vector<Block> gameObjects;
-
-	double playerPositionX = 0.0;
-	double playerPositionY = 0.0;
+	std::vector<ce::Vector2> gameObjects;
+	ce::Vector2 playerPosition;
 
 protected:
-	virtual void setup() override;
-	virtual void update(double deltaTime) override;
+	virtual void update(const double deltaTime) override;
 
 public:
-	Game(int consoleWidth, int consoleHeight, int fontWidth = 8, int fontHeight = 8);
+	Game(int consoleWidth, int consoleHeight, int fontWidth, int fontHeight);
 	~Game();
 };
