@@ -4,7 +4,7 @@
 
 #include <vector>
 
-class Game : public ce::ConsoleEngine
+class TestGame : public ce::ConsoleEngine
 {
 private:
 	std::vector<ce::Vector2> gameObjects;
@@ -14,6 +14,5 @@ protected:
 	virtual void update(const double deltaTime) override;
 
 public:
-	Game(int consoleWidth, int consoleHeight, int fontWidth, int fontHeight);
-	~Game();
+	TestGame(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight);
 };

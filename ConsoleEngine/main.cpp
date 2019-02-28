@@ -1,8 +1,8 @@
-#include "Game.h"
+#include "TestGame.h"
 
 int main()
 {
-	Game game(120, 80, 8, 8);
+	TestGame game(120, 80, 8, 8);
 	game.start();
 
 	return 0;

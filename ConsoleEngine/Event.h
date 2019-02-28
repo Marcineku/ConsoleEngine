@@ -9,7 +9,15 @@ namespace ce
 	{
 		enum class Type
 		{
-			Key, Mouse, Resize
+			KeyStateChange, MouseMove, WindowResize
+		};
+
+		struct KeyState
+		{
+			ce::Key key;
+			bool isDown;
+
+			KeyState();
 		};
 
 		Event();
@@ -17,7 +25,7 @@ namespace ce
 		Type type;
 		union
 		{
-			std::pair<ce::Key, bool> key;
+			KeyState keyState;
 			Vector2Int mousePosition;
 			Vector2Int windowSize;
 		};

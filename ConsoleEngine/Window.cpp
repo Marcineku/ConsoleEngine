@@ -51,7 +51,7 @@ auto ce::Window::getHeight() const -> int
 	return height;
 }
 
-auto ce::Window::pollEvent(Event& event) const -> bool
+auto ce::Window::pollEvent(Event& event) -> bool
 {
 	DWORD numberOfInputEvents;
 	GetNumberOfConsoleInputEvents(consoleInput, &numberOfInputEvents);
@@ -63,19 +63,26 @@ auto ce::Window::pollEvent(Event& event) const -> bool
 		switch (inputRecord.EventType)
 		{
 		case KEY_EVENT:
-			event.type = Event::Type::Key;
-			event.key.first = static_cast<Key>(inputRecord.Event.KeyEvent.wVirtualKeyCode);
-			event.key.second = inputRecord.Event.KeyEvent.bKeyDown;
+			event.type = Event::Type::KeyStateChange;
+			event.keyState.key = static_cast<Key>(inputRecord.Event.KeyEvent.wVirtualKeyCode);
+			event.keyState.isDown = inputRecord.Event.KeyEvent.bKeyDown;
 			break;
 		case MOUSE_EVENT:
-			event.type = Event::Type::Mouse;
+			event.type = Event::Type::MouseMove;
 			event.mousePosition.x = inputRecord.Event.MouseEvent.dwMousePosition.X;
 			event.mousePosition.y = inputRecord.Event.MouseEvent.dwMousePosition.Y;
 			break;
 		case WINDOW_BUFFER_SIZE_EVENT:
-			event.type = Event::Type::Resize;
-			event.windowSize.x = inputRecord.Event.WindowBufferSizeEvent.dwSize.X;
-			event.windowSize.y = inputRecord.Event.WindowBufferSizeEvent.dwSize.Y;
+			width = inputRecord.Event.WindowBufferSizeEvent.dwSize.X;
+			height = inputRecord.Event.WindowBufferSizeEvent.dwSize.Y;
+
+			event.type = Event::Type::WindowResize;
+			event.windowSize.x = width;
+			event.windowSize.y = height;
+
+			screenBufferRect = { 0, 0, width - 1, height - 1 };
+			screenBufferSize = { width, height };
+			screenBuffer.resize(width * height);
 			break;
 		default:
 			break;
@@ -85,6 +92,11 @@ auto ce::Window::pollEvent(Event& event) const -> bool
 	}
 
 	return false;
+}
+
+auto ce::Window::isKeyDown(const int key) const -> bool
+{
+	return GetAsyncKeyState(key) >> 15;
 }
 
 auto ce::Window::setTitle(std::wstring_view title) const -> void

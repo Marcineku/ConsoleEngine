@@ -121,7 +121,7 @@
   <ItemGroup>
     <ClCompile Include="ConsoleEngine.cpp" />
     <ClCompile Include="Event.cpp" />
-    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="TestGame.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector2Int.cpp" />
@@ -130,8 +130,9 @@
   <ItemGroup>
     <ClInclude Include="ConsoleEngine.h" />
     <ClInclude Include="Event.h" />
-    <ClInclude Include="Game.h" />
+    <ClInclude Include="TestGame.h" />
     <ClInclude Include="Key.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="Pixel.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Vector2.h" />

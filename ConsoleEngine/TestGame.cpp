@@ -1,22 +1,15 @@
-#include "Game.h"
+#include "TestGame.h"
 
-Game::Game(int consoleWidth, int consoleHeight, int fontWidth, int fontHeight)
-	: ConsoleEngine(consoleWidth, consoleHeight, fontWidth, fontHeight)
+TestGame::TestGame(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight)
+	: 
+	ConsoleEngine(consoleWidth, consoleHeight, fontWidth, fontHeight)
+{}
+
+void TestGame::update(const double deltaTime)
 {
-
-}
-
-Game::~Game()
-{
-
-}
-
-void Game::update(const double deltaTime)
-{
-	if (isKeyPressed(ce::Key::MouseLeft))
+	if (isKeyPressed(ce::Mouse::Button::Left))
 	{
-		ce::Vector2 block(getMousePosition().x, getMousePosition().y);
-		gameObjects.push_back(block);
+		gameObjects.push_back(ce::Vector2(getMousePosition().x, getMousePosition().y));
 	}
 
 	if (isKeyHeld(ce::Key::Left) || isKeyHeld(ce::Key::A))
@@ -44,7 +37,7 @@ void Game::update(const double deltaTime)
 		draw(gameObject.x, gameObject.y);
 	}
 
-	draw(playerPosition.x, playerPosition.y);
+	draw(playerPosition);
 
 	draw(getMousePosition().x, getMousePosition().y - 1);
 	draw(getMousePosition().x, getMousePosition().y + 1);

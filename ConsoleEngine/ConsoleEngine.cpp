@@ -1,5 +1,28 @@
 #include "ConsoleEngine.h"
 
+auto ce::ConsoleEngine::isHeld(const int keyCode) const -> bool
+{
+	return isKeyDown[keyCode];
+}
+
+auto ce::ConsoleEngine::isPressed(const int keyCode) const -> bool
+{
+	return !wasKeyDown[keyCode] && isKeyDown[keyCode];
+}
+
+auto ce::ConsoleEngine::isReleased(const int keyCode) const -> bool
+{
+	return wasKeyDown[keyCode] && !isKeyDown[keyCode];
+}
+
+auto ce::ConsoleEngine::checkMouseButtonsState() -> void
+{
+	for (int i = 0; i < 8; ++i)
+	{
+		isKeyDown[i] = window.isKeyDown(i);
+	}
+}
+
 auto ce::ConsoleEngine::drawLineLow(const int x0, int y0, const int x1, const int y1, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
 {
 	int dx = x1 - x0;
@@ -58,19 +81,34 @@ auto ce::ConsoleEngine::getWindowHeight() const -> int
 	return window.getHeight();
 }
 
-auto ce::ConsoleEngine::isKeyHeld(ce::Key key) const -> bool
+auto ce::ConsoleEngine::isKeyHeld(const ce::Key key) const -> bool
 {
-	return isKeyDown[to_underlying<Key>(key)];
+	return isHeld(to_underlying<Key>(key));
 }
 
-auto ce::ConsoleEngine::isKeyPressed(ce::Key key) const -> bool
+auto ce::ConsoleEngine::isKeyPressed(const ce::Key key) const -> bool
 {
-	return !wasKeyDown[to_underlying<Key>(key)] && isKeyDown[to_underlying<Key>(key)];
+	return isPressed(to_underlying<Key>(key));
 }
 
-auto ce::ConsoleEngine::isKeyReleased(ce::Key key) const -> bool
+auto ce::ConsoleEngine::isKeyReleased(const ce::Key key) const -> bool
 {
-	return wasKeyDown[to_underlying<Key>(key)] && !isKeyDown[to_underlying<Key>(key)];
+	return isReleased(to_underlying<Key>(key));
+}
+
+auto ce::ConsoleEngine::isKeyHeld(const Mouse::Button button) const -> bool
+{
+	return isHeld(to_underlying<Mouse::Button>(button));
+}
+
+auto ce::ConsoleEngine::isKeyPressed(const Mouse::Button button) const -> bool
+{
+	return isPressed(to_underlying<Mouse::Button>(button));
+}
+
+auto ce::ConsoleEngine::isKeyReleased(const Mouse::Button button) const -> bool
+{
+	return isReleased(to_underlying<Mouse::Button>(button));
 }
 
 auto ce::ConsoleEngine::getMousePosition() const -> Vector2Int
@@ -149,7 +187,7 @@ auto ce::ConsoleEngine::draw(const std::pair<Vector2, Vector2>& line, const Pixe
 	draw(line.first, line.second, color, type, fill);
 }
 
-ce::ConsoleEngine::ConsoleEngine(int consoleWidth, int consoleHeight, int fontWidth, int fontHeight)
+ce::ConsoleEngine::ConsoleEngine(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight)
 	:
 	window(consoleWidth, consoleHeight, fontWidth, fontHeight),
 	wasKeyDown({}),
@@ -181,18 +219,19 @@ auto ce::ConsoleEngine::start() -> void
 		{
 			switch (event.type)
 			{
-			case Event::Type::Key:
-				isKeyDown[to_underlying(event.key.first)] = event.key.second;
+			case Event::Type::KeyStateChange:
+				isKeyDown[to_underlying(event.keyState.key)] = event.keyState.isDown;
 				break;
-			case Event::Type::Mouse:
+			case Event::Type::MouseMove:
 				mousePosition = event.mousePosition;
 				break;
-			case Event::Type::Resize:
+			case Event::Type::WindowResize:
 				break;
 			default:
 				break;
 			}
 		}
+		checkMouseButtonsState();
 		
 		update(deltaTime);
 

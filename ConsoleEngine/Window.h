@@ -33,7 +33,8 @@ namespace ce
 		auto getWidth() const  -> int;
 		auto getHeight() const -> int;
 
-		auto pollEvent(Event& event) const -> bool;
+		auto pollEvent(Event& event) -> bool;
+		auto isKeyDown(const int key) const -> bool;
 
 		auto setTitle(std::wstring_view title) const                                               -> void;
 		auto draw(const int x, const int y, const wchar_t unicodeChar, const unsigned short color) -> void;
