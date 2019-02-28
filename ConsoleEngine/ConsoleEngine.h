@@ -76,6 +76,7 @@ namespace ce
 
 	public:
 		CONSOLEENGINE_API ConsoleEngine(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight);
+		CONSOLEENGINE_API ~ConsoleEngine();
 
 		CONSOLEENGINE_API auto start() -> void;
 	};

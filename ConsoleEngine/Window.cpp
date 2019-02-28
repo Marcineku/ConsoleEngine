@@ -1,5 +1,15 @@
 #include "Window.h"
 
+std::mutex ce::Window::mutex;
+bool ce::Window::open(false);
+
+auto __stdcall ce::Window::CtrlHandler(DWORD fdwCtrlType) -> BOOL
+{
+	open = false;
+	mutex.lock();
+	return true;
+}
+
 ce::Window::Window(const short windowWidth, const short windowHeight, const short fontWidth, const short fontHeight)
 	:
 	console(GetStdHandle(STD_OUTPUT_HANDLE)),
@@ -39,6 +49,11 @@ ce::Window::Window(const short windowWidth, const short windowHeight, const shor
 
 	// Disabling select, enabling window and mouse input events
 	SetConsoleMode(consoleInput, ENABLE_EXTENDED_FLAGS | ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT);
+
+	// Setting up window close conditions
+	mutex.lock();
+	open = true;
+	SetConsoleCtrlHandler(CtrlHandler, TRUE);
 }
 
 auto ce::Window::getWidth() const -> int
@@ -123,4 +138,14 @@ auto ce::Window::display() -> void
 auto ce::Window::clear() -> void
 {
 	std::memset(screenBuffer.data(), 0, sizeof(CHAR_INFO) * width * height);
+}
+
+auto ce::Window::isOpen() -> bool
+{
+	return open;
+}
+
+auto ce::Window::close() -> void
+{
+	mutex.unlock();
 }

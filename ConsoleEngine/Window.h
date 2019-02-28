@@ -5,6 +5,7 @@
 #include <Windows.h>
 #include <vector>
 #include <string_view>
+#include <mutex>
 
 namespace ce
 {
@@ -16,6 +17,10 @@ namespace ce
 	class Window
 	{
 	private:
+		static std::mutex mutex;
+		static bool open;
+		static auto WINAPI CtrlHandler(DWORD fdwCtrlType) -> BOOL;
+
 		const HANDLE console;
 		const HANDLE consoleInput;
 
@@ -40,5 +45,8 @@ namespace ce
 		auto draw(const int x, const int y, const wchar_t unicodeChar, const unsigned short color) -> void;
 		auto display()                                                                             -> void;
 		auto clear()                                                                               -> void;
+
+		auto isOpen() -> bool;
+		auto close()  -> void;
 	};
 }

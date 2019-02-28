@@ -195,6 +195,11 @@ ce::ConsoleEngine::ConsoleEngine(const int consoleWidth, const int consoleHeight
 	mousePosition(0, 0)
 {}
 
+ce::ConsoleEngine::~ConsoleEngine()
+{
+	window.close();
+}
+
 auto ce::ConsoleEngine::start() -> void
 {
 	auto timePoint1 = std::chrono::system_clock::now();
@@ -206,7 +211,7 @@ auto ce::ConsoleEngine::start() -> void
 
 	std::wstringstream wstringStream;
 
-	while (true)
+	while (window.isOpen())
 	{
 		timePoint2 = std::chrono::system_clock::now();
 		duration = timePoint2 - timePoint1;
