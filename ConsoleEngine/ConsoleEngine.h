@@ -51,6 +51,12 @@ namespace ce
 	protected:
 		virtual void update(const double deltaTime) = 0;
 
+	public:
+		CONSOLEENGINE_API ConsoleEngine(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight, const std::wstring_view title);
+		CONSOLEENGINE_API ~ConsoleEngine();
+
+		CONSOLEENGINE_API auto start() -> void;
+
 		CONSOLEENGINE_API auto getWindowWidth() const                          -> int;
 		CONSOLEENGINE_API auto getWindowHeight() const                         -> int;
 
@@ -62,7 +68,7 @@ namespace ce
 		CONSOLEENGINE_API auto isKeyPressed(const Mouse::Button button) const  -> bool;
 		CONSOLEENGINE_API auto isKeyReleased(const Mouse::Button button) const -> bool;
 
-		CONSOLEENGINE_API auto getMousePosition() const                        -> Vector2Int;
+		CONSOLEENGINE_API auto getMousePosition() const->Vector2Int;
 
 		CONSOLEENGINE_API auto draw(const int x, const int y, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                                           -> void;
 		CONSOLEENGINE_API auto draw(const Vector2Int& point, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                                            -> void;
@@ -75,11 +81,5 @@ namespace ce
 		CONSOLEENGINE_API auto draw(const double x0, const double y0, const double x1, const double y1, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White) -> void;
 		CONSOLEENGINE_API auto draw(const Vector2& p0, const Vector2& p1, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                               -> void;
 		CONSOLEENGINE_API auto draw(const std::pair<Vector2, Vector2>& line, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                            -> void;
-
-	public:
-		CONSOLEENGINE_API ConsoleEngine(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight, const std::wstring_view title);
-		CONSOLEENGINE_API ~ConsoleEngine();
-
-		CONSOLEENGINE_API auto start() -> void;
 	};
 }

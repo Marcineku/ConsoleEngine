@@ -71,6 +71,70 @@ auto ce::ConsoleEngine::drawLineHigh(int x0, const int y0, const int x1, const i
 	}
 }
 
+ce::ConsoleEngine::ConsoleEngine(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight, const std::wstring_view title)
+	:
+	title(title),
+	window(consoleWidth, consoleHeight, fontWidth, fontHeight),
+	wasKeyDown({}),
+	isKeyDown({}),
+	mousePosition(0, 0)
+{}
+
+ce::ConsoleEngine::~ConsoleEngine()
+{
+	window.close();
+}
+
+auto ce::ConsoleEngine::start() -> void
+{
+	auto timePoint1 = std::chrono::system_clock::now();
+	auto timePoint2 = std::chrono::system_clock::now();
+	std::chrono::duration<double> duration;
+	double deltaTime;
+
+	Event event;
+
+	std::wstringstream wstringStream;
+
+	while (window.isOpen())
+	{
+		timePoint2 = std::chrono::system_clock::now();
+		duration = timePoint2 - timePoint1;
+		timePoint1 = timePoint2;
+		deltaTime = duration.count();
+
+		window.clear();
+		
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case Event::Type::KeyStateChange:
+				isKeyDown[to_underlying(event.keyState.key)] = event.keyState.isDown;
+				break;
+			case Event::Type::MouseMove:
+				mousePosition = event.mousePosition;
+				break;
+			case Event::Type::WindowResize:
+				break;
+			default:
+				break;
+			}
+		}
+		checkMouseButtonsState();
+		
+		update(deltaTime);
+
+		window.display();
+
+		wasKeyDown = isKeyDown;
+
+		wstringStream.str(std::wstring());
+		wstringStream << title << L" FPS: " << 1.0 / deltaTime;
+		window.setTitle(wstringStream.str());
+	}
+}
+
 auto ce::ConsoleEngine::getWindowWidth() const -> int
 {
 	return window.getWidth();
@@ -185,68 +249,4 @@ auto ce::ConsoleEngine::draw(const Vector2& p0, const Vector2& p1, const Pixel::
 auto ce::ConsoleEngine::draw(const std::pair<Vector2, Vector2>& line, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
 {
 	draw(line.first, line.second, color, type, fill);
-}
-
-ce::ConsoleEngine::ConsoleEngine(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight, const std::wstring_view title)
-	:
-	title(title),
-	window(consoleWidth, consoleHeight, fontWidth, fontHeight),
-	wasKeyDown({}),
-	isKeyDown({}),
-	mousePosition(0, 0)
-{}
-
-ce::ConsoleEngine::~ConsoleEngine()
-{
-	window.close();
-}
-
-auto ce::ConsoleEngine::start() -> void
-{
-	auto timePoint1 = std::chrono::system_clock::now();
-	auto timePoint2 = std::chrono::system_clock::now();
-	std::chrono::duration<double> duration;
-	double deltaTime;
-
-	Event event;
-
-	std::wstringstream wstringStream;
-
-	while (window.isOpen())
-	{
-		timePoint2 = std::chrono::system_clock::now();
-		duration = timePoint2 - timePoint1;
-		timePoint1 = timePoint2;
-		deltaTime = duration.count();
-
-		window.clear();
-		
-		while (window.pollEvent(event))
-		{
-			switch (event.type)
-			{
-			case Event::Type::KeyStateChange:
-				isKeyDown[to_underlying(event.keyState.key)] = event.keyState.isDown;
-				break;
-			case Event::Type::MouseMove:
-				mousePosition = event.mousePosition;
-				break;
-			case Event::Type::WindowResize:
-				break;
-			default:
-				break;
-			}
-		}
-		checkMouseButtonsState();
-		
-		update(deltaTime);
-
-		window.display();
-
-		wasKeyDown = isKeyDown;
-
-		wstringStream.str(std::wstring());
-		wstringStream << title << L" FPS: " << 1.0 / deltaTime;
-		window.setTitle(wstringStream.str());
-	}
 }
