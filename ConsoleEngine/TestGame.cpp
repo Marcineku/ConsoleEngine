@@ -2,7 +2,7 @@
 
 TestGame::TestGame(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight)
 	: 
-	ConsoleEngine(consoleWidth, consoleHeight, fontWidth, fontHeight)
+	ConsoleEngine(consoleWidth, consoleHeight, fontWidth, fontHeight, L"TestGame")
 {}
 
 void TestGame::update(const double deltaTime)

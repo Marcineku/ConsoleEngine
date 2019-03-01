@@ -140,7 +140,7 @@ auto ce::Window::clear() -> void
 	std::memset(screenBuffer.data(), 0, sizeof(CHAR_INFO) * width * height);
 }
 
-auto ce::Window::isOpen() -> bool
+auto ce::Window::isOpen() const -> bool
 {
 	return open;
 }

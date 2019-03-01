@@ -187,8 +187,9 @@ auto ce::ConsoleEngine::draw(const std::pair<Vector2, Vector2>& line, const Pixe
 	draw(line.first, line.second, color, type, fill);
 }
 
-ce::ConsoleEngine::ConsoleEngine(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight)
+ce::ConsoleEngine::ConsoleEngine(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight, const std::wstring_view title)
 	:
+	title(title),
 	window(consoleWidth, consoleHeight, fontWidth, fontHeight),
 	wasKeyDown({}),
 	isKeyDown({}),
@@ -245,7 +246,7 @@ auto ce::ConsoleEngine::start() -> void
 		wasKeyDown = isKeyDown;
 
 		wstringStream.str(std::wstring());
-		wstringStream << L"FPS: " << 1.0 / deltaTime;
+		wstringStream << title << L" FPS: " << 1.0 / deltaTime;
 		window.setTitle(wstringStream.str());
 	}
 }

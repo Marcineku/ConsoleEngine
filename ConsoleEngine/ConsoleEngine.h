@@ -30,6 +30,8 @@ namespace ce
 	class ConsoleEngine
 	{
 	private:
+		std::wstring title;
+
 		Window window;
 
 		std::array<bool, 256> wasKeyDown;
@@ -75,7 +77,7 @@ namespace ce
 		CONSOLEENGINE_API auto draw(const std::pair<Vector2, Vector2>& line, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                            -> void;
 
 	public:
-		CONSOLEENGINE_API ConsoleEngine(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight);
+		CONSOLEENGINE_API ConsoleEngine(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight, const std::wstring_view title);
 		CONSOLEENGINE_API ~ConsoleEngine();
 
 		CONSOLEENGINE_API auto start() -> void;

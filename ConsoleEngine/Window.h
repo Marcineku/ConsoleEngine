@@ -46,7 +46,7 @@ namespace ce
 		auto display()                                                                             -> void;
 		auto clear()                                                                               -> void;
 
-		auto isOpen() -> bool;
-		auto close()  -> void;
+		auto isOpen() const -> bool;
+		auto close()        -> void;
 	};
 }
