@@ -4,7 +4,7 @@
 
 #include <vector>
 
-class TestGame : public ce::ConsoleEngine
+class TestGame : public ce::Engine
 {
 private:
 	std::vector<ce::Vector2> gameObjects;

@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef CONSOLEENGINE_EXPORTS
+#define CONSOLEENGINE_API __declspec(dllexport)
+#else
+#define CONSOLEENGINE_API __declspec(dllimport)
+#endif
+
 #include <algorithm>
 
 namespace ce
@@ -9,18 +15,18 @@ namespace ce
 		double x;
 		double y;
 
-		Vector2();
-		Vector2(const double x, const double y);
-		Vector2(const int x, const int y);
-		  
-		auto operator =  (Vector2 rhs)        -> Vector2&;
-		auto operator += (const Vector2& rhs) -> Vector2&;
-		auto operator -= (const Vector2& rhs) -> Vector2&;
+		CONSOLEENGINE_API Vector2();
+		CONSOLEENGINE_API Vector2(const double x, const double y);
+		CONSOLEENGINE_API Vector2(const int x, const int y);
 
-		auto swap(Vector2& v) -> void;
+		CONSOLEENGINE_API auto operator =  (Vector2 rhs)        -> Vector2&;
+		CONSOLEENGINE_API auto operator += (const Vector2& rhs) -> Vector2&;
+		CONSOLEENGINE_API auto operator -= (const Vector2& rhs) -> Vector2&;
+
+		CONSOLEENGINE_API auto swap(Vector2& v) -> void;
 	};
-	auto operator + (Vector2 lhs, const Vector2& rhs) -> Vector2;
-	auto operator - (Vector2 lhs, const Vector2& rhs) -> Vector2;
+	CONSOLEENGINE_API auto operator + (Vector2 lhs, const Vector2& rhs) -> Vector2;
+	CONSOLEENGINE_API auto operator - (Vector2 lhs, const Vector2& rhs) -> Vector2;
 
-	auto swap(Vector2& v1, Vector2& v2) -> void;
+	CONSOLEENGINE_API auto swap(Vector2& v1, Vector2& v2) -> void;
 }
