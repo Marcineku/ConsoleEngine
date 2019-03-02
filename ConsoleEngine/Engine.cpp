@@ -80,11 +80,6 @@ ce::Engine::Engine(const int consoleWidth, const int consoleHeight, const int fo
 	mousePosition(0, 0)
 {}
 
-ce::Engine::~Engine()
-{
-	window.close();
-}
-
 auto ce::Engine::start() -> void
 {
 	auto timePoint1 = std::chrono::system_clock::now();
@@ -133,6 +128,11 @@ auto ce::Engine::start() -> void
 		wstringStream << title << L" FPS: " << 1.0 / deltaTime;
 		window.setTitle(wstringStream.str());
 	}
+}
+
+auto ce::Engine::close() -> void
+{
+	window.close();
 }
 
 auto ce::Engine::getWindowWidth() const -> int

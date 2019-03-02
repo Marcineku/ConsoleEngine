@@ -1,12 +1,10 @@
 #include "Window.h"
 
-std::mutex ce::Window::mutex;
-bool ce::Window::open(false);
+std::atomic<bool> ce::Window::open(false);
 
 auto __stdcall ce::Window::CtrlHandler(DWORD fdwCtrlType) -> BOOL
 {
 	open = false;
-	mutex.lock();
 	return true;
 }
 
@@ -51,7 +49,6 @@ ce::Window::Window(const short windowWidth, const short windowHeight, const shor
 	SetConsoleMode(consoleInput, ENABLE_EXTENDED_FLAGS | ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT);
 
 	// Setting up window close conditions
-	mutex.lock();
 	open = true;
 	SetConsoleCtrlHandler(CtrlHandler, TRUE);
 }
@@ -147,5 +144,5 @@ auto ce::Window::isOpen() const -> bool
 
 auto ce::Window::close() -> void
 {
-	mutex.unlock();
+	open = false;
 }

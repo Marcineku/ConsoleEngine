@@ -5,7 +5,7 @@
 #include <Windows.h>
 #include <vector>
 #include <string_view>
-#include <mutex>
+#include <atomic>
 
 namespace ce
 {
@@ -17,8 +17,7 @@ namespace ce
 	class Window
 	{
 	private:
-		static std::mutex mutex;
-		static bool open;
+		static std::atomic<bool> open;
 		static auto WINAPI CtrlHandler(DWORD fdwCtrlType) -> BOOL;
 
 		const HANDLE console;

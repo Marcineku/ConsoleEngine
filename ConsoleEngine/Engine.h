@@ -53,9 +53,9 @@ namespace ce
 
 	public:
 		CONSOLEENGINE_API Engine(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight, const std::wstring_view title);
-		CONSOLEENGINE_API ~Engine();
 
 		CONSOLEENGINE_API auto start() -> void;
+		CONSOLEENGINE_API auto close() -> void;
 
 		CONSOLEENGINE_API auto getWindowWidth() const                          -> int;
 		CONSOLEENGINE_API auto getWindowHeight() const                         -> int;
