@@ -258,9 +258,9 @@ auto ce::Engine::draw(const int x, const int y, const wchar_t unicodeChar, const
 
 auto ce::Engine::draw(const int x, const int y, const std::wstring_view text, const Text::Color color, const Pixel::Color fill) -> void
 {
-	for (const auto unicodeChar : text)
+	for (unsigned int i = 0; i < text.length(); ++i)
 	{
-		draw(x, y, unicodeChar, color, fill);
+		draw(x + i, y, text[i], color, fill);
 	}
 }
 

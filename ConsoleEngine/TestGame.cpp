@@ -44,5 +44,7 @@ void TestGame::update(const double deltaTime)
 	draw(getMousePosition().x - 1, getMousePosition().y);
 	draw(getMousePosition().x + 1, getMousePosition().y);
 
+	draw(getMousePosition() + ce::Vector2Int(2, -2), L"x:" + std::to_wstring(getMousePosition().x) + L" y:" + std::to_wstring(getMousePosition().y));
+
 	draw(1, 1, getWindowWidth() - 1, getWindowHeight() - 1);
 }
