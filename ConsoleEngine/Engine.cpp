@@ -185,7 +185,17 @@ auto ce::Engine::draw(const int x, const int y, const Pixel::Color color, const 
 	window.draw(x, y, to_underlying(type), to_underlying(color) | to_underlying(fill));
 }
 
+auto ce::Engine::draw(const double x, const double y, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
+{
+	draw(std::lround(x), std::lround(y), color, type, fill);
+}
+
 auto ce::Engine::draw(const Vector2Int& point, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
+{
+	draw(point.x, point.y, color, type, fill);
+}
+
+auto ce::Engine::draw(const Vector2& point, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
 {
 	draw(point.x, point.y, color, type, fill);
 }
@@ -216,7 +226,17 @@ auto ce::Engine::draw(const int x0, const int y0, const int x1, const int y1, co
 	}
 }
 
+auto ce::Engine::draw(const double x0, const double y0, const double x1, const double y1, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
+{
+	draw(std::lround(x0), std::lround(y0), std::lround(x1), std::lround(y1), color, type, fill);
+}
+
 auto ce::Engine::draw(const Vector2Int& p0, const Vector2Int& p1, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
+{
+	draw(p0.x, p0.y, p1.x, p1.y, color, type, fill);
+}
+
+auto ce::Engine::draw(const Vector2& p0, const Vector2& p1, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
 {
 	draw(p0.x, p0.y, p1.x, p1.y, color, type, fill);
 }
@@ -226,27 +246,50 @@ auto ce::Engine::draw(const std::pair<Vector2Int, Vector2Int>& line, const Pixel
 	draw(line.first, line.second, color, type, fill);
 }
 
-auto ce::Engine::draw(const double x, const double y, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
-{
-	draw(std::lround(x), std::lround(y), color, type, fill);
-}
-
-auto ce::Engine::draw(const Vector2& point, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
-{
-	draw(point.x, point.y, color, type, fill);
-}
-
-auto ce::Engine::draw(const double x0, const double y0, const double x1, const double y1, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
-{
-	draw(std::lround(x0), std::lround(y0), std::lround(x1), std::lround(y1), color, type, fill);
-}
-
-auto ce::Engine::draw(const Vector2& p0, const Vector2& p1, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
-{
-	draw(p0.x, p0.y, p1.x, p1.y, color, type, fill);
-}
-
 auto ce::Engine::draw(const std::pair<Vector2, Vector2>& line, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
 {
 	draw(line.first, line.second, color, type, fill);
+}
+
+auto ce::Engine::draw(const int x, const int y, const wchar_t unicodeChar, const Text::Color color, const Pixel::Color fill) -> void
+{
+	window.draw(x, y, unicodeChar, to_underlying(color) | to_underlying(fill));
+}
+
+auto ce::Engine::draw(const int x, const int y, const std::wstring_view text, const Text::Color color, const Pixel::Color fill) -> void
+{
+	for (const auto unicodeChar : text)
+	{
+		draw(x, y, unicodeChar, color, fill);
+	}
+}
+
+auto ce::Engine::draw(const double x, const double y, const wchar_t unicodeChar, const Text::Color color, const Pixel::Color fill) -> void
+{
+	draw(std::lround(x), std::lround(y), unicodeChar, color, fill);
+}
+
+auto ce::Engine::draw(const double x, const double y, const std::wstring_view text, const Text::Color color, const Pixel::Color fill) -> void
+{
+	draw(std::lround(x), std::lround(y), text, color, fill);
+}
+
+auto ce::Engine::draw(const Vector2Int& point, const wchar_t unicodeChar, const Text::Color color, const Pixel::Color fill) -> void
+{
+	draw(point.x, point.y, unicodeChar, color, fill);
+}
+
+auto ce::Engine::draw(const Vector2Int& point, const std::wstring_view text, const Text::Color color, const Pixel::Color fill) -> void
+{
+	draw(point.x, point.y, text, color, fill);
+}
+
+auto ce::Engine::draw(const Vector2& point, const wchar_t unicodeChar, const Text::Color color, const Pixel::Color fill) -> void
+{
+	draw(point.x, point.y, unicodeChar, color, fill);
+}
+
+auto ce::Engine::draw(const Vector2& point, const std::wstring_view text, const Text::Color color, const Pixel::Color fill) -> void
+{
+	draw(point.x, point.y, text, color, fill);
 }

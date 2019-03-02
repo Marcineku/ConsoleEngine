@@ -18,6 +18,7 @@
 #include <chrono>
 #include <array>
 #include <sstream>
+#include <string_view>
 
 namespace ce
 {
@@ -70,16 +71,24 @@ namespace ce
 
 		CONSOLEENGINE_API auto getMousePosition() const->Vector2Int;
 
-		CONSOLEENGINE_API auto draw(const int x, const int y, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                                           -> void;
-		CONSOLEENGINE_API auto draw(const Vector2Int& point, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                                            -> void;
-		CONSOLEENGINE_API auto draw(const int x0, const int y0, const int x1, const int y1, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)             -> void;
-		CONSOLEENGINE_API auto draw(const Vector2Int& p0, const Vector2Int& p1, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                         -> void;
-		CONSOLEENGINE_API auto draw(const std::pair<Vector2Int, Vector2Int>& line, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                      -> void;
-
+		CONSOLEENGINE_API auto draw(const int    x, const int    y, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                                     -> void;
 		CONSOLEENGINE_API auto draw(const double x, const double y, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                                     -> void;
-		CONSOLEENGINE_API auto draw(const Vector2& point, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                                               -> void;
+		CONSOLEENGINE_API auto draw(const Vector2Int& point, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                                            -> void;
+		CONSOLEENGINE_API auto draw(const Vector2&    point, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                                            -> void;
+		CONSOLEENGINE_API auto draw(const int    x0, const int    y0, const int    x1, const int    y1, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White) -> void;
 		CONSOLEENGINE_API auto draw(const double x0, const double y0, const double x1, const double y1, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White) -> void;
-		CONSOLEENGINE_API auto draw(const Vector2& p0, const Vector2& p1, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                               -> void;
-		CONSOLEENGINE_API auto draw(const std::pair<Vector2, Vector2>& line, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                            -> void;
+		CONSOLEENGINE_API auto draw(const Vector2Int& p0, const Vector2Int& p1, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                         -> void;
+		CONSOLEENGINE_API auto draw(const Vector2&    p0, const Vector2&    p1, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                         -> void;
+		CONSOLEENGINE_API auto draw(const std::pair<Vector2Int, Vector2Int>& line, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                      -> void;
+		CONSOLEENGINE_API auto draw(const std::pair<Vector2, Vector2>&       line, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                      -> void;
+
+		CONSOLEENGINE_API auto draw(const int    x, const int    y, const wchar_t           unicodeChar, const Text::Color color = Text::Color::White, const Pixel::Color fill = Pixel::Color::Black)                                          -> void;
+		CONSOLEENGINE_API auto draw(const int    x, const int    y, const std::wstring_view text,        const Text::Color color = Text::Color::White, const Pixel::Color fill = Pixel::Color::Black)                                          -> void;
+		CONSOLEENGINE_API auto draw(const double x, const double y, const wchar_t           unicodeChar, const Text::Color color = Text::Color::White, const Pixel::Color fill = Pixel::Color::Black)                                          -> void;
+		CONSOLEENGINE_API auto draw(const double x, const double y, const std::wstring_view text,        const Text::Color color = Text::Color::White, const Pixel::Color fill = Pixel::Color::Black)                                          -> void;
+		CONSOLEENGINE_API auto draw(const Vector2Int& point, const wchar_t           unicodeChar, const Text::Color color = Text::Color::White, const Pixel::Color fill = Pixel::Color::Black)                                                 -> void;
+		CONSOLEENGINE_API auto draw(const Vector2Int& point, const std::wstring_view text,        const Text::Color color = Text::Color::White, const Pixel::Color fill = Pixel::Color::Black)                                                 -> void;
+		CONSOLEENGINE_API auto draw(const Vector2&    point, const wchar_t           unicodeChar, const Text::Color color = Text::Color::White, const Pixel::Color fill = Pixel::Color::Black)                                                 -> void;
+		CONSOLEENGINE_API auto draw(const Vector2&    point, const std::wstring_view text,        const Text::Color color = Text::Color::White, const Pixel::Color fill = Pixel::Color::Black)                                                 -> void;
 	};
 }
