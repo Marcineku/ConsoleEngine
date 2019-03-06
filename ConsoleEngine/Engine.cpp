@@ -89,8 +89,6 @@ auto ce::Engine::start() -> void
 
 	Event event;
 
-	std::wstringstream wstringStream;
-
 	while (window.isOpen())
 	{
 		timePoint2 = std::chrono::system_clock::now();
@@ -124,9 +122,7 @@ auto ce::Engine::start() -> void
 
 		wasKeyDown = isKeyDown;
 
-		wstringStream.str(std::wstring());
-		wstringStream << title << L" FPS: " << 1.0 / deltaTime;
-		window.setTitle(wstringStream.str());
+		window.setTitle(title + L" FPS: " + std::to_wstring(1.0 / deltaTime));
 	}
 }
 
@@ -195,11 +191,6 @@ auto ce::Engine::draw(const Vector2Int& point, const Pixel::Color color, const T
 	draw(point.x, point.y, color, type, fill);
 }
 
-auto ce::Engine::draw(const Vector2& point, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
-{
-	draw(point.x, point.y, color, type, fill);
-}
-
 auto ce::Engine::draw(const int x0, const int y0, const int x1, const int y1, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
 {
 	if (std::abs(y1 - y0) < std::abs(x1 - x0))
@@ -236,17 +227,7 @@ auto ce::Engine::draw(const Vector2Int& p0, const Vector2Int& p1, const Pixel::C
 	draw(p0.x, p0.y, p1.x, p1.y, color, type, fill);
 }
 
-auto ce::Engine::draw(const Vector2& p0, const Vector2& p1, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
-{
-	draw(p0.x, p0.y, p1.x, p1.y, color, type, fill);
-}
-
 auto ce::Engine::draw(const std::pair<Vector2Int, Vector2Int>& line, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
-{
-	draw(line.first, line.second, color, type, fill);
-}
-
-auto ce::Engine::draw(const std::pair<Vector2, Vector2>& line, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
 {
 	draw(line.first, line.second, color, type, fill);
 }
@@ -280,16 +261,6 @@ auto ce::Engine::draw(const Vector2Int& point, const wchar_t unicodeChar, const 
 }
 
 auto ce::Engine::draw(const Vector2Int& point, const std::wstring_view text, const Text::Color color, const Pixel::Color fill) -> void
-{
-	draw(point.x, point.y, text, color, fill);
-}
-
-auto ce::Engine::draw(const Vector2& point, const wchar_t unicodeChar, const Text::Color color, const Pixel::Color fill) -> void
-{
-	draw(point.x, point.y, unicodeChar, color, fill);
-}
-
-auto ce::Engine::draw(const Vector2& point, const std::wstring_view text, const Text::Color color, const Pixel::Color fill) -> void
 {
 	draw(point.x, point.y, text, color, fill);
 }

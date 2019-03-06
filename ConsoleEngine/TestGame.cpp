@@ -2,14 +2,73 @@
 
 TestGame::TestGame(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight)
 	: 
-	Engine(consoleWidth, consoleHeight, fontWidth, fontHeight, L"TestGame")
+	Engine(consoleWidth, consoleHeight, fontWidth, fontHeight, L"TestGame"),
+	line(ce::Vector2Int(0, 0), ce::Vector2Int(consoleWidth - 1, consoleHeight - 1)),
+	lineTransitionTimer(0.02)
 {}
+
+auto TestGame::preUpdate(const double deltaTime) -> void
+{
+	lineTransitionTimer.update(deltaTime);
+}
+
+auto TestGame::postUpdate(const double deltaTime) -> void
+{
+	for (auto gameObject : spawnedObjects)
+	{
+		draw(gameObject.x, gameObject.y);
+	}
+
+	draw(playerPosition);
+
+	draw(getMousePosition() - ce::Vector2Int(0, 1));
+	draw(getMousePosition() + ce::Vector2Int(0, 1));
+	draw(getMousePosition() - ce::Vector2Int(1, 0));
+	draw(getMousePosition() + ce::Vector2Int(1, 0));
+
+	draw(getMousePosition() + ce::Vector2Int(2, -2), getMousePosition().toString());
+
+	draw(line);
+}
 
 void TestGame::update(const double deltaTime)
 {
+	preUpdate(deltaTime);
+
+	if (lineTransitionTimer.hasFinished())
+	{
+		auto transition = [](ce::Vector2Int& v, const int width, const int height) -> void
+		{
+			if (v.y == 0 && v.x >= 0 && v.x < width - 1)
+			{
+				++v.x;
+			}
+			else if (v.x == width - 1 && v.y >= 0 && v.y < height - 1)
+			{
+				++v.y;
+			}
+			else if (v.y == height - 1 && v.x >= 1 && v.x < width)
+			{
+				--v.x;
+			}
+			else if (v.x == 0 && v.y >= 1 && v.y < height)
+			{
+				--v.y;
+			}
+		};
+
+		transition(line.first, getWindowWidth(), getWindowHeight());
+		transition(line.second, getWindowWidth(), getWindowHeight());
+	}
+
+	if (isKeyPressed(ce::Key::Esc))
+	{
+		close();
+	}
+
 	if (isKeyPressed(ce::Mouse::Button::Left))
 	{
-		gameObjects.push_back(ce::Vector2(getMousePosition().x, getMousePosition().y));
+		spawnedObjects.push_back(ce::Vector2(getMousePosition().x, getMousePosition().y));
 	}
 
 	if (isKeyHeld(ce::Key::Left) || isKeyHeld(ce::Key::A))
@@ -32,19 +91,5 @@ void TestGame::update(const double deltaTime)
 		playerPosition.y += deltaTime * 50;
 	}
 
-	for (auto gameObject: gameObjects)
-	{
-		draw(gameObject.x, gameObject.y);
-	}
-
-	draw(playerPosition);
-
-	draw(getMousePosition().x, getMousePosition().y - 1);
-	draw(getMousePosition().x, getMousePosition().y + 1);
-	draw(getMousePosition().x - 1, getMousePosition().y);
-	draw(getMousePosition().x + 1, getMousePosition().y);
-
-	draw(getMousePosition() + ce::Vector2Int(2, -2), L"x:" + std::to_wstring(getMousePosition().x) + L" y:" + std::to_wstring(getMousePosition().y));
-
-	draw(1, 1, getWindowWidth() - 1, getWindowHeight() - 1);
+	postUpdate(deltaTime);
 }
