@@ -17,6 +17,8 @@ namespace ce
 
 	struct Vector2
 	{
+		static constexpr double approx_equality_diff = 1e-10;
+
 		double x;
 		double y;
 
@@ -29,13 +31,23 @@ namespace ce
 		CONSOLEENGINE_API auto operator =  (Vector2 rhs)        -> Vector2&;
 		CONSOLEENGINE_API auto operator += (const Vector2& rhs) -> Vector2&;
 		CONSOLEENGINE_API auto operator -= (const Vector2& rhs) -> Vector2&;
+		CONSOLEENGINE_API auto operator *= (const double rhs)   -> Vector2&;
+		CONSOLEENGINE_API auto operator /= (const double rhs)   -> Vector2&;
+
+		CONSOLEENGINE_API auto sqrMagnitude() -> double;
+		CONSOLEENGINE_API auto magnitude()    -> double;
 
 		CONSOLEENGINE_API auto swap(Vector2& v) -> void;
 
-		CONSOLEENGINE_API auto toString()->std::wstring;
+		CONSOLEENGINE_API auto toString() -> std::wstring;
 	};
 	CONSOLEENGINE_API auto operator + (Vector2 lhs, const Vector2& rhs) -> Vector2;
 	CONSOLEENGINE_API auto operator - (Vector2 lhs, const Vector2& rhs) -> Vector2;
+	CONSOLEENGINE_API auto operator * (Vector2 lhs, const double rhs)   -> Vector2;
+	CONSOLEENGINE_API auto operator / (Vector2 lhs, const double rhs)   -> Vector2;
+
+	CONSOLEENGINE_API auto operator == (const Vector2& lhs, const Vector2& rhs) -> bool;
+	CONSOLEENGINE_API auto operator != (const Vector2& lhs, const Vector2& rhs) -> bool;
 
 	CONSOLEENGINE_API auto swap(Vector2& v1, Vector2& v2) -> void;
 }

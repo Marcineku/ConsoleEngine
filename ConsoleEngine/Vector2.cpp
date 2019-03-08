@@ -46,6 +46,30 @@ auto ce::Vector2::operator-=(const Vector2& rhs) -> Vector2&
 	return *this;
 }
 
+auto ce::Vector2::operator*=(const double rhs) -> Vector2 &
+{
+	x *= rhs;
+	y *= rhs;
+	return *this;
+}
+
+auto ce::Vector2::operator/=(const double rhs) -> Vector2 &
+{
+	x /= rhs;
+	y /= rhs;
+	return *this;
+}
+
+auto ce::Vector2::sqrMagnitude() -> double
+{
+	return x * x + y * y;
+}
+
+auto ce::Vector2::magnitude() -> double
+{
+	return std::sqrt(sqrMagnitude());
+}
+
 auto ce::Vector2::swap(Vector2& v) -> void
 {
 	std::swap(x, v.x);
@@ -67,6 +91,28 @@ auto ce::operator-(Vector2 lhs, const Vector2& rhs) -> Vector2
 {
 	lhs -= rhs;
 	return lhs;
+}
+
+auto ce::operator*(Vector2 lhs, const double rhs) -> Vector2
+{
+	lhs *= rhs;
+	return lhs;
+}
+
+auto ce::operator/(Vector2 lhs, const double rhs) -> Vector2
+{
+	lhs /= rhs;
+	return lhs;
+}
+
+auto ce::operator==(const Vector2& lhs, const Vector2& rhs) -> bool
+{
+	return (lhs - rhs).sqrMagnitude() < ce::Vector2::approx_equality_diff;
+}
+
+auto ce::operator!=(const Vector2& lhs, const Vector2& rhs) -> bool
+{
+	return !operator==(lhs, rhs);
 }
 
 auto ce::swap(Vector2& v1, Vector2& v2) -> void

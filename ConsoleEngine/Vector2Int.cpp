@@ -46,6 +46,30 @@ auto ce::Vector2Int::operator-=(const Vector2Int& rhs) -> Vector2Int&
 	return *this;
 }
 
+auto ce::Vector2Int::operator*=(const int rhs) -> Vector2Int &
+{
+	x *= rhs;
+	y *= rhs;
+	return *this;
+}
+
+auto ce::Vector2Int::operator/=(const int rhs) -> Vector2Int &
+{
+	x /= rhs;
+	y /= rhs;
+	return *this;
+}
+
+auto ce::Vector2Int::sqrMagnitude() -> double
+{
+	return x * x + y * y;
+}
+
+auto ce::Vector2Int::magnitude() -> double
+{
+	return std::sqrt(sqrMagnitude());
+}
+
 auto ce::Vector2Int::swap(Vector2Int& v) -> void
 {
 	std::swap(x, v.x);
@@ -67,6 +91,28 @@ auto ce::operator-(Vector2Int lhs, const Vector2Int& rhs) -> Vector2Int
 {
 	lhs -= rhs;
 	return lhs;
+}
+
+auto ce::operator*(Vector2Int lhs, const int rhs) -> Vector2Int
+{
+	lhs *= rhs;
+	return lhs;
+}
+
+auto ce::operator/(Vector2Int lhs, const int rhs) -> Vector2Int
+{
+	lhs /= rhs;
+	return lhs;
+}
+
+auto ce::operator==(const Vector2Int& lhs, const Vector2Int& rhs) -> bool
+{
+	return lhs.x == rhs.x && lhs.y == rhs.y;
+}
+
+auto ce::operator!=(const Vector2Int& lhs, const Vector2Int& rhs) -> bool
+{
+	return !operator==(lhs, rhs);
 }
 
 auto ce::swap(Vector2Int& v1, Vector2Int& v2) -> void

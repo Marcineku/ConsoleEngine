@@ -30,6 +30,11 @@ namespace ce
 		CONSOLEENGINE_API auto operator =  (Vector2Int rhs)        -> Vector2Int&;
 		CONSOLEENGINE_API auto operator += (const Vector2Int& rhs) -> Vector2Int&;
 		CONSOLEENGINE_API auto operator -= (const Vector2Int& rhs) -> Vector2Int&;
+		CONSOLEENGINE_API auto operator *= (const int rhs)         -> Vector2Int&;
+		CONSOLEENGINE_API auto operator /= (const int rhs)         -> Vector2Int&;
+
+		CONSOLEENGINE_API auto sqrMagnitude() -> double;
+		CONSOLEENGINE_API auto magnitude()    -> double;
 
 		CONSOLEENGINE_API auto swap(Vector2Int& v) -> void;
 
@@ -37,6 +42,11 @@ namespace ce
 	};
 	CONSOLEENGINE_API auto operator + (Vector2Int lhs, const Vector2Int& rhs) -> Vector2Int;
 	CONSOLEENGINE_API auto operator - (Vector2Int lhs, const Vector2Int& rhs) -> Vector2Int;
+	CONSOLEENGINE_API auto operator * (Vector2Int lhs, const int rhs)         -> Vector2Int;
+	CONSOLEENGINE_API auto operator / (Vector2Int lhs, const int rhs)         -> Vector2Int;
+
+	CONSOLEENGINE_API auto operator == (const Vector2Int& lhs, const Vector2Int& rhs) -> bool;
+	CONSOLEENGINE_API auto operator != (const Vector2Int& lhs, const Vector2Int& rhs) -> bool;
 
 	CONSOLEENGINE_API auto swap(Vector2Int& v1, Vector2Int& v2) -> void;
 }
