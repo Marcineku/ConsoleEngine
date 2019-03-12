@@ -121,6 +121,8 @@
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="RectInt.cpp" />
     <ClCompile Include="TestGame.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -132,6 +134,8 @@
     <ClInclude Include="ConsoleEngine.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="Rect.h" />
+    <ClInclude Include="RectInt.h" />
     <ClInclude Include="TestGame.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="Mouse.h" />

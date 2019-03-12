@@ -10,3 +10,5 @@
 #include "Vector2Int.h"
 #include "Vector2.h"
 #include "Timer.h"
+#include "Rect.h"
+#include "RectInt.h"

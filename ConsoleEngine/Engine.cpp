@@ -232,6 +232,23 @@ auto ce::Engine::draw(const std::pair<Vector2Int, Vector2Int>& line, const Pixel
 	draw(line.first, line.second, color, type, fill);
 }
 
+auto ce::Engine::draw(const Vector2Int& position, const int width, const int height, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
+{
+	const Vector2Int rightUp  (position + Vector2Int(width - 1, 0         ));
+	const Vector2Int leftDown (position + Vector2Int(0        , height - 1));
+	const Vector2Int rightDown(position + Vector2Int(width - 1, height - 1));
+
+	draw(position , rightUp  , color, type, fill);
+	draw(rightUp  , rightDown, color, type, fill);
+	draw(rightDown, leftDown , color, type, fill);
+	draw(leftDown , position , color, type, fill);
+}
+
+auto ce::Engine::draw(const RectInt& rect, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
+{
+	draw(rect.position(), rect.width, rect.height, color, type, fill);
+}
+
 auto ce::Engine::draw(const int x, const int y, const wchar_t unicodeChar, const Text::Color color, const Pixel::Color fill) -> void
 {
 	window.draw(x, y, unicodeChar, to_underlying(color) | to_underlying(fill));

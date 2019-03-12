@@ -1,9 +1,10 @@
 #include "TestGame.h"
 
 TestGame::TestGame(const int consoleWidth, const int consoleHeight, const int fontWidth, const int fontHeight)
-	: 
+	:
 	Engine(consoleWidth, consoleHeight, fontWidth, fontHeight, L"TestGame"),
 	line(ce::Vector2Int(0, 0), ce::Vector2Int(consoleWidth - 1, consoleHeight - 1)),
+	rect(1, 1, 2, 2),
 	lineTransitionTimer(0.02)
 {}
 
@@ -29,6 +30,8 @@ auto TestGame::postUpdate(const double deltaTime) -> void
 	draw(getMousePosition() + ce::Vector2Int(2, -2), getMousePosition().toString());
 
 	draw(line);
+
+	draw(rect);
 }
 
 void TestGame::update(const double deltaTime)

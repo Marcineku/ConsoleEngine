@@ -60,23 +60,28 @@ auto ce::Vector2Int::operator/=(const int rhs) -> Vector2Int &
 	return *this;
 }
 
-auto ce::Vector2Int::sqrMagnitude() -> double
-{
-	return x * x + y * y;
-}
-
-auto ce::Vector2Int::magnitude() -> double
-{
-	return std::sqrt(sqrMagnitude());
-}
-
 auto ce::Vector2Int::swap(Vector2Int& v) -> void
 {
 	std::swap(x, v.x);
 	std::swap(y, v.y);
 }
 
-auto ce::Vector2Int::toString() -> std::wstring
+auto ce::Vector2Int::sqrMagnitude() const -> double
+{
+	return x * x + y * y;
+}
+
+auto ce::Vector2Int::magnitude() const -> double
+{
+	return std::sqrt(sqrMagnitude());
+}
+
+auto ce::Vector2Int::distance(const Vector2Int& v) const -> double
+{
+	return (*this - v).magnitude();
+}
+
+auto ce::Vector2Int::toString() const -> std::wstring
 {
 	return L"x:" + std::to_wstring(x) + L" y:" + std::to_wstring(y);
 }
@@ -118,4 +123,9 @@ auto ce::operator!=(const Vector2Int& lhs, const Vector2Int& rhs) -> bool
 auto ce::swap(Vector2Int& v1, Vector2Int& v2) -> void
 {
 	v1.swap(v2);
+}
+
+auto ce::distance(const Vector2Int& v1, const Vector2Int& v2) -> double
+{
+	return v1.distance(v2);
 }

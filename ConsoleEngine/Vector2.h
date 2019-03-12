@@ -34,12 +34,16 @@ namespace ce
 		CONSOLEENGINE_API auto operator *= (const double rhs)   -> Vector2&;
 		CONSOLEENGINE_API auto operator /= (const double rhs)   -> Vector2&;
 
-		CONSOLEENGINE_API auto sqrMagnitude() -> double;
-		CONSOLEENGINE_API auto magnitude()    -> double;
-
 		CONSOLEENGINE_API auto swap(Vector2& v) -> void;
 
-		CONSOLEENGINE_API auto toString() -> std::wstring;
+		CONSOLEENGINE_API auto sqrMagnitude() const             -> double;
+		CONSOLEENGINE_API auto magnitude() const                -> double;
+		CONSOLEENGINE_API auto distance(const Vector2& v) const -> double;
+		CONSOLEENGINE_API auto normalized() const               -> Vector2;
+
+		CONSOLEENGINE_API auto normalize()                      -> void;
+
+		CONSOLEENGINE_API auto toString() const -> std::wstring;
 	};
 	CONSOLEENGINE_API auto operator + (Vector2 lhs, const Vector2& rhs) -> Vector2;
 	CONSOLEENGINE_API auto operator - (Vector2 lhs, const Vector2& rhs) -> Vector2;
@@ -50,4 +54,6 @@ namespace ce
 	CONSOLEENGINE_API auto operator != (const Vector2& lhs, const Vector2& rhs) -> bool;
 
 	CONSOLEENGINE_API auto swap(Vector2& v1, Vector2& v2) -> void;
+
+	CONSOLEENGINE_API auto distance(const Vector2& v1, const Vector2& v2) -> double;
 }

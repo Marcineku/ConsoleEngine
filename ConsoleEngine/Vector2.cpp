@@ -60,23 +60,46 @@ auto ce::Vector2::operator/=(const double rhs) -> Vector2 &
 	return *this;
 }
 
-auto ce::Vector2::sqrMagnitude() -> double
-{
-	return x * x + y * y;
-}
-
-auto ce::Vector2::magnitude() -> double
-{
-	return std::sqrt(sqrMagnitude());
-}
-
 auto ce::Vector2::swap(Vector2& v) -> void
 {
 	std::swap(x, v.x);
 	std::swap(y, v.y);
 }
 
-auto ce::Vector2::toString() -> std::wstring
+auto ce::Vector2::sqrMagnitude() const -> double
+{
+	return x * x + y * y;
+}
+
+auto ce::Vector2::magnitude() const -> double
+{
+	return std::sqrt(sqrMagnitude());
+}
+
+auto ce::Vector2::distance(const Vector2& v) const -> double
+{
+	return (*this - v).magnitude();
+}
+
+auto ce::Vector2::normalized() const -> Vector2
+{
+	const double magnitude = this->magnitude();
+	if (magnitude != 0.0)
+	{
+		return *this / magnitude;
+	}
+	else
+	{
+		return *this;
+	}
+}
+
+auto ce::Vector2::normalize() -> void
+{
+	*this = this->normalized();
+}
+
+auto ce::Vector2::toString() const -> std::wstring
 {
 	return L"x:" + std::to_wstring(x) + L" y:" + std::to_wstring(y);
 }
@@ -118,4 +141,9 @@ auto ce::operator!=(const Vector2& lhs, const Vector2& rhs) -> bool
 auto ce::swap(Vector2& v1, Vector2& v2) -> void
 {
 	v1.swap(v2);
+}
+
+auto ce::distance(const Vector2& v1, const Vector2& v2) -> double
+{
+	return v1.distance(v2);
 }

@@ -12,6 +12,8 @@ private:
 
 	std::pair<ce::Vector2Int, ce::Vector2Int> line;
 
+	ce::RectInt rect;
+
 	Timer lineTransitionTimer;
 
 	auto preUpdate(const double deltaTime)  -> void;
