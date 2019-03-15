@@ -4,7 +4,7 @@ TestGame::TestGame(const int consoleWidth, const int consoleHeight, const int fo
 	:
 	Engine(consoleWidth, consoleHeight, fontWidth, fontHeight, L"TestGame"),
 	line(ce::Vector2Int(0, 0), ce::Vector2Int(consoleWidth - 1, consoleHeight - 1)),
-	rect(1, 1, 2, 2),
+	rect(1, 1, 3, 3),
 	lineTransitionTimer(0.02)
 {}
 

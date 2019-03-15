@@ -35,7 +35,7 @@ auto ce::Engine::drawLineLow(const int x0, int y0, const int x1, const int y1, c
 	}
 	int D = 2 * dy - dx;
 
-	for (int x = x0; x < x1; ++x)
+	for (int x = x0; x <= x1; ++x)
 	{
 		draw(x, y0, color, type, fill);
 		if (D > 0)
@@ -59,7 +59,7 @@ auto ce::Engine::drawLineHigh(int x0, const int y0, const int x1, const int y1, 
 	}
 	int D = 2 * dx - dy;
 
-	for (int y = y0; y < y1; ++y)
+	for (int y = y0; y <= y1; ++y)
 	{
 		draw(x0, y, color, type, fill);
 		if (D > 0)
@@ -239,9 +239,9 @@ auto ce::Engine::draw(const Vector2Int& position, const int width, const int hei
 	const Vector2Int rightDown(position + Vector2Int(width - 1, height - 1));
 
 	draw(position , rightUp  , color, type, fill);
-	draw(rightUp  , rightDown, color, type, fill);
-	draw(rightDown, leftDown , color, type, fill);
-	draw(leftDown , position , color, type, fill);
+	//draw(rightUp  , rightDown, color, type, fill);
+	//draw(rightDown, leftDown , color, type, fill);
+	//draw(leftDown , position , color, type, fill);
 }
 
 auto ce::Engine::draw(const RectInt& rect, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
