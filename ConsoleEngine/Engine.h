@@ -65,11 +65,11 @@ namespace ce
 		CONSOLEENGINE_API auto isKeyPressed(const Key key) const               -> bool;
 		CONSOLEENGINE_API auto isKeyReleased(const Key key) const              -> bool;
 
-		CONSOLEENGINE_API auto isKeyHeld(const Mouse::Button button) const     -> bool;
-		CONSOLEENGINE_API auto isKeyPressed(const Mouse::Button button) const  -> bool;
-		CONSOLEENGINE_API auto isKeyReleased(const Mouse::Button button) const -> bool;
+		CONSOLEENGINE_API auto isKeyHeld(const Mouse button) const     -> bool;
+		CONSOLEENGINE_API auto isKeyPressed(const Mouse button) const  -> bool;
+		CONSOLEENGINE_API auto isKeyReleased(const Mouse button) const -> bool;
 
-		CONSOLEENGINE_API auto getMousePosition() const->Vector2Int;
+		CONSOLEENGINE_API auto getMousePosition() const -> Vector2Int;
 
 		CONSOLEENGINE_API auto draw(const int    x, const int    y, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                                     -> void;
 		CONSOLEENGINE_API auto draw(const double x, const double y, const Pixel::Color color = Pixel::Color::White, const Text::Type type = Text::Type::None, const Text::Color fill = Text::Color::White)                                     -> void;

@@ -4,8 +4,10 @@ TestGame::TestGame(const int consoleWidth, const int consoleHeight, const int fo
 	:
 	Engine(consoleWidth, consoleHeight, fontWidth, fontHeight, L"TestGame"),
 	line(ce::Vector2Int(0, 0), ce::Vector2Int(consoleWidth - 1, consoleHeight - 1)),
-	rect(1, 1, 3, 3),
-	lineTransitionTimer(0.02)
+	rect(10.0, 10.0, 5.0, 5.0),
+	isRectSelected(false),
+	lineTransitionTimer(0.02),
+	clickPoint(0, 0)
 {}
 
 auto TestGame::preUpdate(const double deltaTime) -> void
@@ -15,23 +17,26 @@ auto TestGame::preUpdate(const double deltaTime) -> void
 
 auto TestGame::postUpdate(const double deltaTime) -> void
 {
-	for (auto gameObject : spawnedObjects)
-	{
-		draw(gameObject.x, gameObject.y);
-	}
-
-	draw(playerPosition);
-
-	draw(getMousePosition() - ce::Vector2Int(0, 1));
-	draw(getMousePosition() + ce::Vector2Int(0, 1));
-	draw(getMousePosition() - ce::Vector2Int(1, 0));
-	draw(getMousePosition() + ce::Vector2Int(1, 0));
+	draw(ce::Rect(playerPosition, ce::Vector2(3.0, 3.0)));
 
 	draw(getMousePosition() + ce::Vector2Int(2, -2), getMousePosition().toString());
 
 	draw(line);
 
 	draw(rect);
+
+	if (rect.contains(getMousePosition()) || isRectSelected)
+	{
+		draw(rect.position() - ce::Vector2(0, 2), rect.toString());
+		draw(rect.position() - ce::Vector2(0, 4), L"center: " + rect.center().toString());
+	}
+
+	if (isKeyHeld(ce::Mouse::Left))
+	{
+		const ce::RectInt r = ce::RectInt(clickPoint, getMousePosition() - clickPoint + ce::Vector2Int(1, 1));
+		draw(r);
+		draw(r.position() + ce::Vector2Int(1, 1), r.toString());
+	}
 }
 
 void TestGame::update(const double deltaTime)
@@ -69,29 +74,41 @@ void TestGame::update(const double deltaTime)
 		close();
 	}
 
-	if (isKeyPressed(ce::Mouse::Button::Left))
-	{
-		spawnedObjects.push_back(ce::Vector2(getMousePosition().x, getMousePosition().y));
-	}
+	ce::Vector2 newPlayerPosition = playerPosition;
 
 	if (isKeyHeld(ce::Key::Left) || isKeyHeld(ce::Key::A))
 	{
-		playerPosition.x -= deltaTime * 50;
+		newPlayerPosition.x -= deltaTime * 50;
 	}
 
 	if (isKeyHeld(ce::Key::Up) || isKeyHeld(ce::Key::W))
 	{
-		playerPosition.y -= deltaTime * 50;
+		newPlayerPosition.y -= deltaTime * 50;
 	}
 
 	if (isKeyHeld(ce::Key::Right) || isKeyHeld(ce::Key::D))
 	{
-		playerPosition.x += deltaTime * 50;
+		newPlayerPosition.x += deltaTime * 50;
 	}
 
 	if (isKeyHeld(ce::Key::Down) || isKeyHeld(ce::Key::S))
 	{
-		playerPosition.y += deltaTime * 50;
+		newPlayerPosition.y += deltaTime * 50;
+	}
+
+	if (!ce::Rect(newPlayerPosition, ce::Vector2(3.0, 3.0)).overlaps(rect))
+	{
+		playerPosition = newPlayerPosition;
+	}
+
+	if (isKeyPressed(ce::Mouse::Left))
+	{
+		clickPoint = getMousePosition();	
+	}
+
+	if (isKeyReleased(ce::Mouse::Left))
+	{
+		isRectSelected = ce::Rect(clickPoint, getMousePosition() - clickPoint + ce::Vector2Int(1, 1)).contains(rect.center());
 	}
 
 	postUpdate(deltaTime);

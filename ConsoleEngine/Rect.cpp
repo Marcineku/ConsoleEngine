@@ -63,6 +63,14 @@ auto ce::Rect::contains(const Vector2& v) const -> bool
 		   v.y >= y && v.y <= y + height - 1.0;
 }
 
+auto ce::Rect::overlaps(const Rect& r) const -> bool
+{
+	if (x + width  < r.x || x > r.x + r.width ) return false;
+	if (y + height < r.y || y > r.y + r.height) return false;
+
+	return true;
+}
+
 auto ce::Rect::toString() const -> std::wstring
 {
 	return L"x:" + std::to_wstring(x) + L" y:" + std::to_wstring(y) + L" w:" + std::to_wstring(width) + L" h:" + std::to_wstring(height);

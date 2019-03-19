@@ -156,19 +156,19 @@ auto ce::Engine::isKeyReleased(const ce::Key key) const -> bool
 	return isReleased(to_underlying<Key>(key));
 }
 
-auto ce::Engine::isKeyHeld(const Mouse::Button button) const -> bool
+auto ce::Engine::isKeyHeld(const Mouse button) const -> bool
 {
-	return isHeld(to_underlying<Mouse::Button>(button));
+	return isHeld(to_underlying<Mouse>(button));
 }
 
-auto ce::Engine::isKeyPressed(const Mouse::Button button) const -> bool
+auto ce::Engine::isKeyPressed(const Mouse button) const -> bool
 {
-	return isPressed(to_underlying<Mouse::Button>(button));
+	return isPressed(to_underlying<Mouse>(button));
 }
 
-auto ce::Engine::isKeyReleased(const Mouse::Button button) const -> bool
+auto ce::Engine::isKeyReleased(const Mouse button) const -> bool
 {
-	return isReleased(to_underlying<Mouse::Button>(button));
+	return isReleased(to_underlying<Mouse>(button));
 }
 
 auto ce::Engine::getMousePosition() const -> Vector2Int
@@ -239,9 +239,9 @@ auto ce::Engine::draw(const Vector2Int& position, const int width, const int hei
 	const Vector2Int rightDown(position + Vector2Int(width - 1, height - 1));
 
 	draw(position , rightUp  , color, type, fill);
-	//draw(rightUp  , rightDown, color, type, fill);
-	//draw(rightDown, leftDown , color, type, fill);
-	//draw(leftDown , position , color, type, fill);
+	draw(rightUp  , rightDown, color, type, fill);
+	draw(rightDown, leftDown , color, type, fill);
+	draw(leftDown , position , color, type, fill);
 }
 
 auto ce::Engine::draw(const RectInt& rect, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void

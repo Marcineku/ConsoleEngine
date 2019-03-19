@@ -38,6 +38,7 @@ namespace ce
 		CONSOLEENGINE_API auto center() const   -> Vector2;
 
 		CONSOLEENGINE_API auto contains(const Vector2& v) const -> bool;
+		CONSOLEENGINE_API auto overlaps(const Rect& r) const    -> bool;
 
 		CONSOLEENGINE_API auto toString() const -> std::wstring;
 	};
