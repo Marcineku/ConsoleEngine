@@ -45,3 +45,13 @@ auto ce::Timer::getCount() const -> double
 {
 	return count;
 }
+
+auto ce::Timer::getTime() const -> double
+{
+	return time;
+}
+
+auto ce::Timer::setTime(const double time) -> void
+{
+	this->time = time;
+}
