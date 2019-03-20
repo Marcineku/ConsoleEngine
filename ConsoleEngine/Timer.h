@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef CONSOLEENGINE_EXPORTS
+#define CONSOLEENGINE_API __declspec(dllexport)
+#else
+#define CONSOLEENGINE_API __declspec(dllimport)
+#endif
+
 namespace ce
 {
 	class Timer
@@ -11,14 +17,14 @@ namespace ce
 		bool run;
 
 	public:
-		Timer(const double time);
+		CONSOLEENGINE_API Timer(const double time);
 
-		auto start()                       -> void;
-		auto stop()                       -> void;
-		auto update(const double deltaTime) -> void;
-		auto reset()                       -> void;
+		CONSOLEENGINE_API auto start()                        -> void;
+		CONSOLEENGINE_API auto stop()                         -> void;
+		CONSOLEENGINE_API auto update(const double deltaTime) -> void;
+		CONSOLEENGINE_API auto reset()                        -> void;
 
-		auto hasFinished()                  -> bool;
-		auto getCount() const               -> double;
+		CONSOLEENGINE_API auto hasFinished()                  -> bool;
+		CONSOLEENGINE_API auto getCount() const               -> double;
 	};
 }

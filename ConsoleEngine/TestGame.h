@@ -15,7 +15,7 @@ private:
 	ce::Rect rect;
 	bool isRectSelected;
 
-	Timer lineTransitionTimer;
+	ce::Timer lineTransitionTimer;
 
 	ce::Vector2Int clickPoint;
 

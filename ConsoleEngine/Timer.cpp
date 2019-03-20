@@ -1,23 +1,23 @@
 #include "Timer.h"
 
-Timer::Timer(const double time)
+ce::Timer::Timer(const double time)
 	:
 	time(time),
 	count(0.0),
 	run(true)
 {}
 
-auto Timer::start() -> void
+auto ce::Timer::start() -> void
 {
 	run = true;
 }
 
-auto Timer::stop() -> void
+auto ce::Timer::stop() -> void
 {
 	run = false;
 }
 
-auto Timer::update(double deltaTime) -> void
+auto ce::Timer::update(double deltaTime) -> void
 {
 	if (run)
 	{
@@ -25,12 +25,12 @@ auto Timer::update(double deltaTime) -> void
 	}
 }
 
-auto Timer::reset() -> void
+auto ce::Timer::reset() -> void
 {
 	count = 0.0;
 }
 
-auto Timer::hasFinished() -> bool
+auto ce::Timer::hasFinished() -> bool
 {
 	if (count >= time)
 	{
@@ -41,7 +41,7 @@ auto Timer::hasFinished() -> bool
 	return false;
 }
 
-auto Timer::getCount() const -> double
+auto ce::Timer::getCount() const -> double
 {
 	return count;
 }
