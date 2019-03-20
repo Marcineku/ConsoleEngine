@@ -1,21 +1,24 @@
 #pragma once
 
-class Timer
+namespace ce
 {
-private:
-	double time;
-	double count;
+	class Timer
+	{
+	private:
+		double time;
+		double count;
 
-	bool run;
+		bool run;
 
-public:
-	Timer(const double time);
+	public:
+		Timer(const double time);
 
-	auto start ()                       -> void;
-	auto stop  ()                       -> void;
-	auto update(const double deltaTime) -> void;
-	auto reset ()                       -> void;
+		auto start()                       -> void;
+		auto stop()                       -> void;
+		auto update(const double deltaTime) -> void;
+		auto reset()                       -> void;
 
-	auto hasFinished()                  -> bool;
-	auto getCount() const               -> double;
-};
+		auto hasFinished()                  -> bool;
+		auto getCount() const               -> double;
+	};
+}
