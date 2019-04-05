@@ -35,7 +35,7 @@ auto ce::Engine::drawLineLow(const int x0, int y0, const int x1, const int y1, c
 	}
 	int D = 2 * dy - dx;
 
-	for (int x = x0; x < x1; ++x)
+	for (int x = x0; x <= x1; ++x)
 	{
 		draw(x, y0, color, type, fill);
 		if (D > 0)
@@ -59,7 +59,7 @@ auto ce::Engine::drawLineHigh(int x0, const int y0, const int x1, const int y1, 
 	}
 	int D = 2 * dx - dy;
 
-	for (int y = y0; y < y1; ++y)
+	for (int y = y0; y <= y1; ++y)
 	{
 		draw(x0, y, color, type, fill);
 		if (D > 0)
@@ -88,8 +88,6 @@ auto ce::Engine::start() -> void
 	double deltaTime;
 
 	Event event;
-
-	std::wstringstream wstringStream;
 
 	while (window.isOpen())
 	{
@@ -124,9 +122,7 @@ auto ce::Engine::start() -> void
 
 		wasKeyDown = isKeyDown;
 
-		wstringStream.str(std::wstring());
-		wstringStream << title << L" FPS: " << 1.0 / deltaTime;
-		window.setTitle(wstringStream.str());
+		window.setTitle(title + L" FPS: " + std::to_wstring(1.0 / deltaTime));
 	}
 }
 
@@ -160,19 +156,19 @@ auto ce::Engine::isKeyReleased(const ce::Key key) const -> bool
 	return isReleased(to_underlying<Key>(key));
 }
 
-auto ce::Engine::isKeyHeld(const Mouse::Button button) const -> bool
+auto ce::Engine::isKeyHeld(const Mouse button) const -> bool
 {
-	return isHeld(to_underlying<Mouse::Button>(button));
+	return isHeld(to_underlying<Mouse>(button));
 }
 
-auto ce::Engine::isKeyPressed(const Mouse::Button button) const -> bool
+auto ce::Engine::isKeyPressed(const Mouse button) const -> bool
 {
-	return isPressed(to_underlying<Mouse::Button>(button));
+	return isPressed(to_underlying<Mouse>(button));
 }
 
-auto ce::Engine::isKeyReleased(const Mouse::Button button) const -> bool
+auto ce::Engine::isKeyReleased(const Mouse button) const -> bool
 {
-	return isReleased(to_underlying<Mouse::Button>(button));
+	return isReleased(to_underlying<Mouse>(button));
 }
 
 auto ce::Engine::getMousePosition() const -> Vector2Int
@@ -191,11 +187,6 @@ auto ce::Engine::draw(const double x, const double y, const Pixel::Color color, 
 }
 
 auto ce::Engine::draw(const Vector2Int& point, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
-{
-	draw(point.x, point.y, color, type, fill);
-}
-
-auto ce::Engine::draw(const Vector2& point, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
 {
 	draw(point.x, point.y, color, type, fill);
 }
@@ -236,19 +227,26 @@ auto ce::Engine::draw(const Vector2Int& p0, const Vector2Int& p1, const Pixel::C
 	draw(p0.x, p0.y, p1.x, p1.y, color, type, fill);
 }
 
-auto ce::Engine::draw(const Vector2& p0, const Vector2& p1, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
-{
-	draw(p0.x, p0.y, p1.x, p1.y, color, type, fill);
-}
-
 auto ce::Engine::draw(const std::pair<Vector2Int, Vector2Int>& line, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
 {
 	draw(line.first, line.second, color, type, fill);
 }
 
-auto ce::Engine::draw(const std::pair<Vector2, Vector2>& line, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
+auto ce::Engine::draw(const Vector2Int& position, const int width, const int height, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
 {
-	draw(line.first, line.second, color, type, fill);
+	const Vector2Int rightUp  (position + Vector2Int(width - 1, 0         ));
+	const Vector2Int leftDown (position + Vector2Int(0        , height - 1));
+	const Vector2Int rightDown(position + Vector2Int(width - 1, height - 1));
+
+	draw(position , rightUp  , color, type, fill);
+	draw(rightUp  , rightDown, color, type, fill);
+	draw(rightDown, leftDown , color, type, fill);
+	draw(leftDown , position , color, type, fill);
+}
+
+auto ce::Engine::draw(const RectInt& rect, const Pixel::Color color, const Text::Type type, const Text::Color fill) -> void
+{
+	draw(rect.position(), rect.width, rect.height, color, type, fill);
 }
 
 auto ce::Engine::draw(const int x, const int y, const wchar_t unicodeChar, const Text::Color color, const Pixel::Color fill) -> void
@@ -280,16 +278,6 @@ auto ce::Engine::draw(const Vector2Int& point, const wchar_t unicodeChar, const 
 }
 
 auto ce::Engine::draw(const Vector2Int& point, const std::wstring_view text, const Text::Color color, const Pixel::Color fill) -> void
-{
-	draw(point.x, point.y, text, color, fill);
-}
-
-auto ce::Engine::draw(const Vector2& point, const wchar_t unicodeChar, const Text::Color color, const Pixel::Color fill) -> void
-{
-	draw(point.x, point.y, unicodeChar, color, fill);
-}
-
-auto ce::Engine::draw(const Vector2& point, const std::wstring_view text, const Text::Color color, const Pixel::Color fill) -> void
 {
 	draw(point.x, point.y, text, color, fill);
 }

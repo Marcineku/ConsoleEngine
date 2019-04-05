@@ -7,10 +7,7 @@ namespace ce
 {
 	struct Event
 	{
-		enum class Type
-		{
-			KeyStateChange, MouseMove, WindowResize
-		};
+		enum class Type { KeyStateChange, MouseMove, WindowResize };
 
 		struct KeyState
 		{
