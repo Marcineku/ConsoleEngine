@@ -1,17 +1,19 @@
 # ConsoleEngine
 
+![alt text](https://raw.githubusercontent.com/Marcineku/ConsoleEngine/master/Preview.png)
 
 # Description
 ConsoleEngine is a project made purely for fun, inspired by javidx9 and his olcConsoleGameEngine.
 It supposed to be a thin layer on top of a windows api for windows 10 console.
 It provides basic input and drawing support, also currently has Vector2, Rect and Timer classes implemented.
-All engine components are under "ce" namespace.
+It was made purely in visual studio, without any external libraries.
 
 # How to use
 To use it, download this project, build it in Visual Studio, provide ConsoleEngine.h, ConsoleEngine.lib and ConsoleEngine.dll
 for your game project, then make your main game class to inherit after ce::Engine and pass console, font, and app name data
 to its constructor.
 After that just overwrite "update" function and you are good to go.
+All engine components are under "ce" namespace.
 
 # Demo-app footage
 https://youtu.be/f4eD30wTzZc
